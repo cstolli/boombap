@@ -1,0 +1,17 @@
+<h1>{{channel.label}}</h1>
+{{source-picker source=channel.source onSelectSource=(action 'onSelectSource')}}
+{{eq-panel frequencies=eqFrequencies}}
+{{pan-knob}}
+{{volume-fader onChange=(action 'onVolumeChange') volume=volume}}
+<div class='mute-solo'>
+  <button class='mute' onClick={{action 'onMute'}}>M</button>
+  <button class='solo' onClick={{action 'onSolo'}}>S</button>
+</div>
+<div
+  class='trigger-pad'
+  onClick={{action 'onTrigger'}}
+>
+  <div class='light' style='opacity:{{relativeVolume}};'>
+  </div>
+</div>
+{{yield}}

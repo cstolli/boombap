@@ -1,0 +1,24 @@
+@import 'components/main-chassis';
+@import 'components/beat-sequencer';
+@import 'components/beat-sequencer-slot';
+@import 'components/channel-strip';
+@import 'components/volume-fader';
+@import 'components/pan-knob';
+@import 'components/eq-panel';
+@import 'components/eq-knob';
+@import 'components/transport-button';
+@import 'components/transport-panel';
+@import 'components/source-picker';
+
+html {
+  font-family: 'VT323', monospace;
+  height: 100%;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    height: 100%;
+  }
+}

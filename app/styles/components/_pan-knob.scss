@@ -1,0 +1,38 @@
+.pan-knob {
+  height: 30px;
+  width: 30px;
+  cursor: grab;
+  position: relative;
+
+  svg {
+    transform-origin: center center;
+
+    circle {
+      stroke-width: 1px;
+      stroke: #AAA;
+      fill: #DDD;
+    }
+
+    polygon {
+      fill: #333;
+    }
+  }
+
+  label {
+    position: absolute;
+    font-size: 10px;
+
+    &.left {
+      left: -4px;
+      bottom: -4px;
+    }
+    &.right {
+      right: -4px;
+      bottom: -4px;
+    }
+  }
+
+  &.is-grabbed {
+    cursor: grabbing;
+  }
+}

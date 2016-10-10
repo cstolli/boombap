@@ -1,0 +1,31 @@
+.transport-panel {
+  padding: 8px;
+  height: 40px;
+  background: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2px;
+  background: #444;
+  margin-top: 8px;
+
+  .divider {
+    height: 60%;
+    width: 1px;
+    background: #888;
+    margin: 0 8px;
+  }
+
+  .tempo {
+    height: 30px;
+    background: #CCC;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3px;
+    border-radius: 2px;
+    padding: 0 12px;
+  }
+}

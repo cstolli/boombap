@@ -1,0 +1,23 @@
+<div class='mixer-slot'>
+</div>
+<div class='channel-slot'>
+  {{#each channels as |channel|}}
+    {{channel-strip
+      channel=channel
+      volume=channel.volume
+      selectedChannel=selectedChannel
+      onSelectSource=(action 'selectSource')
+      onSelect=(action 'selectChannel')
+      onMute=(action 'muteChannel')
+      onSolo=(action 'soloChannel')
+    }}
+  {{/each}}
+  {{channel-strip channel=masterChannel classNames='master' selectedChannel=selectedChannel onSelect=(action 'selectChannel')}}
+</div>
+<div class='sequencer-slot'>
+  {{beat-sequencer divisions=sequencerDivisions}}
+</div>
+<div class='transport-panel-slot'>
+  {{transport-panel tempo=tempo division=division}}
+</div>
+{{yield}}

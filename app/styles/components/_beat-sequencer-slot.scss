@@ -1,0 +1,14 @@
+.beat-sequencer-slot {
+  width: calc(100% / 16 - 20px);
+  height: calc(100% - 20px);
+  min-height: 30px;
+  min-width: 30px;
+  background-color: #BBB;
+  border-radius: 2px;
+
+  &.active {
+    background-color: #FFFFCC;
+    box-shadow: 0px 0px 8px 2px #FFFFAA;
+    border: solid 1px #EEEECC;
+  }
+}

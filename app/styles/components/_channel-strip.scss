@@ -1,0 +1,84 @@
+.channel-strip {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  background: #DDD;
+  width: calc(100% / 9 - 2px);
+
+  h1 {
+    margin: 4px 0 0 0;
+    font-size: 21px;
+  }
+
+  .trigger-pad {
+    height: 50px;
+    width: 50px;
+    background: #999966;
+    position: relative;
+    .light {
+      pointer-events: false;
+      background: #FFFFCC;
+      position:absolute;
+      top: 0px;
+      left: 0px;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  button.solo,
+  button.mute {
+    border: solid 1px #AAA;
+    background: #CCC;
+    border-radius: 2px;
+    outline: none;
+  }
+
+  &.focused {
+    box-shadow: 0px 0px 16px 5px #ccccee inset;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &.solo {
+    button.solo {
+      background: #AAEEAA;
+    }
+  }
+
+  &.mute {
+    button.mute {
+      background: #EE9999;
+    }
+  }
+
+  &.master {
+    background: #555;
+    .pan-knob {
+      color: #eee;
+      svg {
+        circle {
+          stroke: #DDD;
+          fill: #999;
+        }
+        polygon {
+          fill: #EEE;
+        }
+      }
+    }
+    .volume-fader {
+      input[type=range]::-webkit-slider-thumb {
+        background:#eee;
+        box-shadow: 0px 0px 10px 3px #ccc inset;
+      }
+      .value {
+        background: white;
+        color: #333
+      }
+    }
+  }
+}

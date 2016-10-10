@@ -1,0 +1,15 @@
+.source-picker {
+  height: 20px;
+  width: 80%;
+  background: #AAA;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2px;
+
+  .dot-menu {
+    cursor: pointer;
+  }
+}

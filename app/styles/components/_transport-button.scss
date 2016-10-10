@@ -1,0 +1,16 @@
+.transport-button {
+  width: 30px;
+  height: 30px;
+  background: white;
+  border-radius: 2px;
+  margin: 0 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  svg {
+    polygon {
+      fill: #444;
+    }
+  }
+}

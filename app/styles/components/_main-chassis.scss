@@ -1,0 +1,34 @@
+.main-chassis {
+  width: 100%;
+  min-height: 500px;
+  min-width: 575px;
+  background: #CCC;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+
+  .channel-slot {
+    height: 80%;
+    width: 100%;
+    min-height: 375px;
+    background: #EEE;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 1px 0px 18px -3px #8888aa inset;
+    border-radius: 2px;
+    margin-bottom: 4px;
+    border: solid 1px #afafaf;
+  }
+
+  .sequencer-slot {
+    width: 100%;
+    height: 10%;
+    min-height: 50px;
+    background: #DDD;
+  }
+}
