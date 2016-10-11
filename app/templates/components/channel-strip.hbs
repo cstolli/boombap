@@ -1,8 +1,8 @@
 <h1>{{channel.label}}</h1>
-{{source-picker source=channel.source onSelectSource=(action 'onSelectSource')}}
+{{source-picker label=sourceLabel output=channel onSelectSource=(action 'onSelectSource')}}
 {{eq-panel frequencies=eqFrequencies}}
-{{pan-knob}}
-{{volume-fader onChange=(action 'onVolumeChange') volume=volume}}
+{{pan-knob value=pan onPanChange=(action 'onPanChange')}}
+{{volume-fader onChange=(action 'onVolumeChange') gain=gain}}
 <div class='mute-solo'>
   <button class='mute' onClick={{action 'onMute'}}>M</button>
   <button class='solo' onClick={{action 'onSolo'}}>S</button>
@@ -11,7 +11,8 @@
   class='trigger-pad'
   onClick={{action 'onTrigger'}}
 >
-  <div class='light' style='opacity:{{relativeVolume}};'>
-  </div>
+  {{#if triggered}}
+    <div class='light' style='opacity:{{relativeVolume}};'></div>
+  {{/if}}
 </div>
 {{yield}}

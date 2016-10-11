@@ -20,13 +20,30 @@ export default Ember.Component.extend({
     soloChannel (value) {
       this.setSoloChannel(value)
     },
-    muteChannel (value) {
-      this.setMutedChannel(value)
+    muteChannel (channelNumber) {
+      const channel = this.get('channels').findBy('number', channelNumber)
+      const muted = this.get('soundly').toggleChannelMute(channelNumber)
+      Ember.set(channel, 'mute', muted)
     },
-    selectSource (file, channel) {
-      this.get('soundly').loadFileSource(file, channel)
+    channelVolume (value, channelNumber) {
+      this.get('soundly').setChannelVolume(channelNumber, value)
+      const channel = this.get('channels').findBy('number', channelNumber) || this.get('masterChannel')
+      Ember.set(channel, 'gain', value)
+    },
+    triggerSource (channelNumber) {
+      this.triggerChannel(channelNumber)
+    },
+    panChannel (value, channelNumber) {
+      this.get('soundly').setChannelPan(channelNumber, value)
+      const channel = this.get('channels').findBy('number', channelNumber) || this.get('masterChannel')
+      Ember.set(channel, 'pan', value)
+    },
+    selectSource (file, channelNumber) {
+      const channel = this.get('channels').findBy('number', channelNumber)
+      this.get('soundly').loadFileSource(file, channelNumber)
         .then((sound) => {
-          this.notifyPropertyChange('channel')
+          Ember.set(channel, 'input', sound)
+          Ember.set(channel, 'sourceLabel', file.name)
         })
     }
   },

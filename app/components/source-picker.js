@@ -2,6 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['source-picker'],
+  label: Ember.computed('output', function () {
+    return this.get('output.input.sampleMeta.name')
+  }),
   actions: {
     onMenuClick (event) {
       this.$('input').click()

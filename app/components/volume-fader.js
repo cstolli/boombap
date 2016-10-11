@@ -5,24 +5,28 @@ export default Ember.Component.extend({
   classNameBindings: ['isGrabbed'],
   range: {min: 0, max: 72},
   isGrabbed: false,
-  volume: Ember.computed('value', {
+  gain: 0.9,
+  normalizedGain: Ember.computed(function () {
+    return 60 / (this.get('range').max - this.get('range').min)
+  }),
+  volume: Ember.computed('gain', {
     get(key) {
-      return this.get('value') - 60
+      return Math.round(this.get('gain') * (this.get('range').max - this.get('range').min) - 60)
     },
     set(key, value) {
       return value
     }
   }),
-  value: Ember.computed('volume', {
+  value: Ember.computed('gain', {
     get(key) {
-      return this.get('volume') + 60
+      return this.get('gain') * (this.get('range').max - this.get('range').min)
     },
     set(key, value) {
       return value
     }
   }),
   doubleClick () {
-    this.set('volume', 0)
+    this.get('onChange')(this.get('normalizedGain'))
   },
   scale: Ember.computed('', function () {
     return [
@@ -43,8 +47,9 @@ export default Ember.Component.extend({
   },
   actions: {
     sliderChange (event) {
-      this.set('value', event.target.value)
-      this.get('onChange')(this.get('volume'))
+      const range = this.get('range').max - this.get('range').min
+      const relativeGain = event.target.value / range
+      this.get('onChange')(relativeGain)
     }
   }
 });

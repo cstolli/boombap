@@ -1,0 +1,5 @@
+<h1>{{channel.label}}</h1>
+{{eq-panel frequencies=eqFrequencies}}
+{{pan-knob value=pan onPanChange=(action 'onPanChange')}}
+{{volume-fader onChange=(action 'onVolumeChange') gain=gain}}
+{{yield}}

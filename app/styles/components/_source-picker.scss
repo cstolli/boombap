@@ -1,15 +1,33 @@
 .source-picker {
-  height: 20px;
+  height: 30px;
   width: 80%;
   background: #AAA;
   padding: 10px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  overflow: hidden;
+  padding: 4px;
   border-radius: 2px;
 
-  .dot-menu {
+  > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     cursor: pointer;
+    width: 100%;
+    height: 16px;
+
+    label {
+      cursor: pointer;
+      font-size: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+    }
+    .dot-menu {
+      display: inline-block;
+      fill: #DDD;
+      margin-right: 4px;
+    }
   }
+
 }

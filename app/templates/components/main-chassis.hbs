@@ -4,15 +4,32 @@
   {{#each channels as |channel|}}
     {{channel-strip
       channel=channel
-      volume=channel.volume
+      channelNumber=channel.number
+      gain=channel.gain
+      pan=channel.pan
+      triggered=channel.triggered
+      sourceLabel=channel.sourceLabel
       selectedChannel=selectedChannel
+      onTrigger=(action 'triggerSource')
+      onPanChange=(action 'panChannel')
+      onVolumeChange=(action 'channelVolume')
       onSelectSource=(action 'selectSource')
       onSelect=(action 'selectChannel')
       onMute=(action 'muteChannel')
       onSolo=(action 'soloChannel')
     }}
   {{/each}}
-  {{channel-strip channel=masterChannel classNames='master' selectedChannel=selectedChannel onSelect=(action 'selectChannel')}}
+  {{master-channel-strip
+    channel=masterChannel
+    classNames='master'
+    gain=masterChannel.gain
+    pan=masterChannel.pan
+    channelNumber=masterChannel.number
+    selectedChannel=selectedChannel
+    onPanChange=(action 'panChannel')
+    onSelect=(action 'selectChannel')
+    onVolumeChange=(action 'channelVolume')
+  }}
 </div>
 <div class='sequencer-slot'>
   {{beat-sequencer divisions=sequencerDivisions}}
