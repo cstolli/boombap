@@ -15,12 +15,15 @@
   .trigger-pad {
     height: 50px;
     width: 50px;
-    background: #999966;
+    border-radius: 4px;
+    background-color: #88999E;
     position: relative;
     .light {
       pointer-events: false;
       background: #FFFFCC;
-      position:absolute;
+      position: absolute;
+      border-radius: 4px;
+      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3) inset;
       top: 0px;
       left: 0px;
       height: 100%;
@@ -78,6 +81,25 @@
       .value {
         background: white;
         color: #333
+      }
+    }
+    div.brand {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+
+      h1 {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        text-align: center;
+        color: #FFAA88;
+      }
+      .label-light {
+        opacity: 0;
+        color: #FFFFCC;
+        text-shadow: 0px 0px 15px #FFFFCC;
       }
     }
   }

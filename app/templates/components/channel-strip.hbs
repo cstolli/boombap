@@ -11,8 +11,10 @@
   class='trigger-pad'
   onClick={{action 'onTrigger'}}
 >
+  {{#unless mute}}
   {{#if triggered}}
     <div class='light' style='opacity:{{relativeVolume}};'></div>
   {{/if}}
+  {{/unless}}
 </div>
 {{yield}}

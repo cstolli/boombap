@@ -17,8 +17,10 @@ export default Ember.Component.extend({
     selectChannel (value) {
       this.set('selectedChannel', value)
     },
-    soloChannel (value) {
-      this.setSoloChannel(value)
+    soloChannel (channelNumber) {
+      const soloed = this.get('soundly').toggleChannelSolo(channelNumber)
+      const channel = this.get('channels').findBy('number', channelNumber)
+      Ember.set(channel, 'solo', soloed)
     },
     muteChannel (channelNumber) {
       const channel = this.get('channels').findBy('number', channelNumber)

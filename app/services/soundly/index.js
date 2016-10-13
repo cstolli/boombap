@@ -1,12 +1,14 @@
 const context = new window.AudioContext()
 import Ember from 'ember'
 const Promise = Ember.RSVP.Promise
+import _ from 'lodash'
 
 function trigger(number) {
   const channel = getChannel(number)
   const source = context.createBufferSource()
   const playback = new Promise((resolve, reject) => {
     source.onended = () => {
+      source.disconnect()
       resolve()
     }
     if (!channel.sample) {
@@ -31,6 +33,10 @@ function setSample(sample, meta, channelNumber) {
 }
 
 function createChannel (label, options = {}) {
+
+  if (!options.number) {
+    throw('A channel must have a number')
+  }
   const panner = context.createStereoPanner()
   const splitter = context.createChannelSplitter()
   const gain = context.createGain()
@@ -41,14 +47,18 @@ function createChannel (label, options = {}) {
   gain.gain.value = options.gain || 0
   output.gain.value = 1
 
-  panner.connect(gain)
-  gain.connect(analyser)
-  gain.connect(splitter)
+  gain.connect(panner)
+  panner.connect(output)
+  output.connect(analyser)
+  analyser.connect(splitter)
   splitter.connect(getChannel('master').source, 0, 0)
   splitter.connect(getChannel('master').source, 1, 1)
   const channel = {
     label: label || options.label || '',
-    source: panner,
+    number: options.number,
+    source: gain,
+    mute: options.mute || false,
+    solo: options.solo || false,
     panner,
     gain,
     output,
@@ -60,9 +70,43 @@ function createChannel (label, options = {}) {
 }
 
 function toggleChannelMute(channelNumber){
-  const outputGain = getChannel(channelNumber).output.gain
+  const muteChannel = getChannel(channelNumber)
+  const outputGain = muteChannel.output.gain
+  muteChannel.mute = !muteChannel.mute
   outputGain.value = outputGain.value === 1 ? 0 : 1
-  return !!!outputGain.value
+  return muteChannel.mute
+}
+
+function getChannels() {
+  return _.reject(mixer.channels, {label: 'master'})
+}
+
+//TODO: Find the better algorithm here
+function toggleChannelSolo(channelNumber) {
+  const soloChannel = getChannel(channelNumber)
+  soloChannel.solo = !soloChannel.solo
+  soloChannel.output.gain.value = soloChannel.solo ? 1 : 0
+
+  const soloed = _.map(getChannels(), (channel) => {
+    if (
+        channel.output.gain.value === 0 ||
+        channel.solo
+      ) {
+      return channel.solo
+    }
+    channel.output.gain.value = 1 - channel.output.gain.value
+    return channel.solo
+  })
+
+  if (_.filter(soloed, (item) => item).length === 0) {
+    _.map(mixer.channels, (channel) => {
+      if (channel.label === 'master' || channel.mute) {
+        return
+      }
+      channel.output.gain.value = 1
+    })
+  }
+  return soloChannel.solo
 }
 
 function createMasterChannel (numChannels, options) {
@@ -138,7 +182,8 @@ const mixer = {
   createChannel,
   toggleChannelMute,
   setChannelVolume,
-  setChannelPan
+  setChannelPan,
+  toggleChannelSolo
 }
 
 export default mixer

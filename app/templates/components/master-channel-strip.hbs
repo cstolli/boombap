@@ -1,4 +1,7 @@
-<h1>{{channel.label}}</h1>
+<div class='brand'>
+  <h1>{{channel.label}}</h1>
+  <h1 class='label-light' style='opacity: {{relativeVolume}};'>{{channel.label}}</h1>
+</div>
 {{eq-panel frequencies=eqFrequencies}}
 {{pan-knob value=pan onPanChange=(action 'onPanChange')}}
 {{volume-fader onChange=(action 'onVolumeChange') gain=gain}}

@@ -46,17 +46,19 @@ export default Ember.Component.extend({
     this._super(...arguments)
     const analyser = this.get('channel.input.analyser')
     analyser.fftSize = 2048;
-    var bufferLength = analyser.fftSize;
-    var dataArray = new Uint8Array(bufferLength);
-    this.animate(analyser, dataArray)
+    this.animate(analyser)
   },
-  animate(analyser, dataArray) {
+  animate(analyser) {
     requestAnimationFrame(() => {
       this.animate(...arguments)
     })
-    this.visualize(analyser, dataArray)
+    if (this.get('triggered')) {
+      this.visualize(analyser)
+    }
   },
-  visualize(analyser, dataArray) {
+  visualize(analyser) {
+    var bufferLength = analyser.fftSize;
+    var dataArray = new Uint8Array(bufferLength);
     analyser.getByteFrequencyData(dataArray)
     let average = _.reduce(dataArray, (value, seed) => {
         return value + seed;

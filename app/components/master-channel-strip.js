@@ -51,7 +51,17 @@ export default Ember.Component.extend({
     this.visualize(analyser, dataArray)
   },
   visualize(analyser, dataArray) {
-
+    analyser.getByteFrequencyData(dataArray)
+    let average = _.reduce(dataArray, (value, seed) => {
+        return value + seed;
+    }, 0) / dataArray.length;
+    const range = analyser.maxDecibels - analyser.minDecibels
+    let percent = average / range;
+    const relativeVolume = Ember.String.htmlSafe(Math.min(1, percent * 7))
+    if (this.getWithDefault('relativeVolume', Ember.String.htmlSafe('')).string === relativeVolume.string) {
+      return
+    }
+    this.set('relativeVolume', relativeVolume)
   },
   focusIn () {
     this.get('onSelect')(this.get('channel.number'))
