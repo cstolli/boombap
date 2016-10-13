@@ -3,7 +3,7 @@
 <div class='value'>{{volume}}</div>
 <div class='scale'>
   {{#each scale as |tick|}}
-    <div class='tick' style='top:{{tick.yPos}}'>
+    <div class='tick' style={{tick.style}}>
       <label>{{tick.value}}</label><div class='rule'></div><label>{{tick.value}}</label>
     </div>
   {{/each}}

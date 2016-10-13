@@ -163,7 +163,7 @@ function loadUrlSource (url, channel) {
       })
     }
     oReq.onerror = (err) => {
-      console.log(err)
+      console.warn(`${url} not loaded, error: ${err}`)
     }
     oReq.responseType = "arraybuffer";
     oReq.open("GET", url, true);
@@ -183,7 +183,8 @@ const mixer = {
   toggleChannelMute,
   setChannelVolume,
   setChannelPan,
-  toggleChannelSolo
+  toggleChannelSolo,
+  trigger,
 }
 
 export default mixer

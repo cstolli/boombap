@@ -2,9 +2,12 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['beat-sequencer-slot'],
-  classNameBindings: ['active'],
+  classNameBindings: ['active', 'playing'],
   active: false,
+  playing: Ember.computed('playingDivision', function () {
+    return parseInt(this.get('number'), 10) === this.get('playingDivision')
+  }),
   click () {
-    this.toggleProperty('active')
+    this.get('onChange')(parseInt(this.get('number'), 10))
   }
 });

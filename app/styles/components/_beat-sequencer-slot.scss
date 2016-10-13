@@ -4,11 +4,21 @@
   min-height: 30px;
   min-width: 30px;
   background-color: #BBB;
+  text-align: center;
+  line-height: 240%;
+  color: #FFFFCC;
   border-radius: 2px;
+  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2) inset,
+              1px 1px 1px 1px #666;
 
   &.active {
-    background-color: #FFFFCC;
-    box-shadow: 0px 0px 8px 2px #FFFFAA;
-    border: solid 1px #EEEECC;
+    background-color: #DDDDAA;
+  }
+
+
+
+  &.playing {
+    background-color: #FFFFBA;
+    color: #CCCCFF;
   }
 }

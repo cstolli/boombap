@@ -1,7 +1,7 @@
 .pan-knob {
   height: 30px;
   width: 30px;
-  cursor: grab;
+  cursor: ew-resize;
   position: relative;
 
   svg {
@@ -30,9 +30,5 @@
       right: -4px;
       bottom: -4px;
     }
-  }
-
-  &.is-grabbed {
-    cursor: grabbing;
   }
 }

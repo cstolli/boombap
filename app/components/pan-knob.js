@@ -10,6 +10,9 @@ export default Ember.Component.extend({
   sensitivity: 2,
   range: [-1, 1],
   value: 0,
+  svgStyle: Ember.computed('knobAngle', function () {
+    return Ember.String.htmlSafe(`transform:rotate(${this.get('knobAngle')}deg);`)
+  }),
   doubleClick () {
     this.setProperties({'value': 0, lastKnobAngle: 0})
   },
@@ -31,7 +34,9 @@ export default Ember.Component.extend({
   },
   drag (event) {
     const startPos = this.get('dragStartPos')
+
     const value = (event.offsetX - startPos)
+    console.info(value)
     if (value < -200 || value > 200) {
       return
     }

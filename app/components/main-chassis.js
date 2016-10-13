@@ -3,15 +3,87 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['main-chassis'],
   attributeBindings: ['style'],
-  selectedChannel: 0,
+  selectedChannel: 1,
   tempo: 80,
-  division: 16,
+  divisions: 16,
+  patterns: {},
+  timeSignature: {numberator: 4, denominator: 4},
+  playingDivision: 0,
+  playing: false,
   soundly: Ember.inject.service('soundly'),
   style: Ember.computed('height', function () {
     return `height: ${this.get('height')}px;`
   }),
-  sequencerDivisions: Array.apply(null, {length: 16}).map((division, index) => {
-    return {'division': index}
+  init () {
+    this._super(...arguments)
+  },
+  didReceiveAttrs() {
+    this.handleKeys(this.get('key'))
+  },
+  handleKeys(key) {
+    switch (key) {
+      case '32':  //spacebar
+        this.actions.togglePlay.call(this)
+        break;
+    }
+  },
+  runAnimationLoop() {
+    let then = window.performance.now()
+    const startTime = then
+    let now, elapsed, currentInterval = 1
+
+    const loop = () => {
+      const bps = this.get('tempo') / 60 // turn BPM into BPS
+      const bpsInterval = 1000 / (bps * 4)
+
+      if (this.get('playing')) {
+        requestAnimationFrame(loop)
+      } else {
+        this.set('playingDivision', 0)
+      }
+
+      now = window.performance.now();
+      elapsed = now - then;
+      if (elapsed > bpsInterval || elapsed === 0) {
+        this.sequence(currentInterval)
+        currentInterval++
+        if (currentInterval === this.get('divisions') + 1) {
+          currentInterval = 1
+        }
+        then = now - (elapsed % bpsInterval);
+      }
+    }
+
+    loop()
+  },
+
+  sequence(division){
+    this.set('playingDivision', division)
+    this.get('channels').map((channel) => {
+      if (!channel.pattern) {
+        return
+      }
+      if (channel.pattern[division].active) {
+        this.triggerChannel(channel.number)
+      }
+    })
+  },
+
+  freshPattern () {
+    const pattern = Ember.Object.create({})
+    for (let x = 1; x <= this.get('divisions'); x++) {
+      pattern.set(x + '', Ember.Object.create({
+        beat: Math.ceil(x / 4),
+        division: x % 4 || 4,
+        active: false
+      }))
+    }
+    return pattern
+  },
+  selectedPattern: Ember.computed('selectedChannel', 'channels.@each.pattern', function () {
+    const channel = this.get('channels').findBy('number', this.get('selectedChannel'))
+    const pattern = channel.pattern || this.freshPattern()
+    return pattern
   }),
   actions: {
     selectChannel (value) {
@@ -32,6 +104,15 @@ export default Ember.Component.extend({
       const channel = this.get('channels').findBy('number', channelNumber) || this.get('masterChannel')
       Ember.set(channel, 'gain', value)
     },
+    setPattern (division, channelNumber) {
+      const channel = this.get('channels').findBy('number', channelNumber) || this.get('masterChannel')
+      const pattern = channel.pattern || this.freshPattern()
+      pattern[division].set('active', !pattern[division].get('active'))
+      Ember.set(channel, 'pattern', pattern)
+    },
+    changeTempo (tempo) {
+      this.set('tempo', parseInt(tempo, 10))
+    },
     triggerSource (channelNumber) {
       this.triggerChannel(channelNumber)
     },
@@ -47,6 +128,15 @@ export default Ember.Component.extend({
           Ember.set(channel, 'input', sound)
           Ember.set(channel, 'sourceLabel', file.name)
         })
+    },
+    togglePlay () {
+      this.set('playing', !this.get('playing'))
+      if (this.get('playing')) {
+        this.runAnimationLoop()
+      }
+    },
+    goBack () {
+
     }
   },
   setSoloChannel (value) {

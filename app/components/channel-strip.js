@@ -8,6 +8,9 @@ export default Ember.Component.extend({
   mute: Ember.computed('channel.mute', function () {
     return this.get('channel.mute')
   }),
+  style: Ember.computed('relativeVolume', function () {
+    return Ember.String.htmlSafe(`opacity: ${this.get('relativeVolume')};`)
+  }),
   solo: Ember.computed('channel.solo', function () {
     return this.get('channel.solo')
   }),
@@ -73,6 +76,5 @@ export default Ember.Component.extend({
   },
   focusIn () {
     this.get('onSelect')(this.get('channel.number'))
-    return false;
   }
 });

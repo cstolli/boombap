@@ -1,8 +1,9 @@
 <div class='mixer-slot'>
 </div>
 <div class='channel-slot'>
-  {{#each channels as |channel|}}
+  {{#each channels as |channel index|}}
     {{channel-strip
+      key=key
       channel=channel
       channelNumber=channel.number
       gain=channel.gain
@@ -21,7 +22,7 @@
       onSolo=(action 'soloChannel')
     }}
   {{/each}}
-  {{master-channel-strip
+  {{#master-channel-strip
     channel=masterChannel
     classNames='master'
     gain=masterChannel.gain
@@ -32,11 +33,13 @@
     onSelect=(action 'selectChannel')
     onVolumeChange=(action 'channelVolume')
   }}
+    <div class='transport-panel-slot'>
+      {{transport-panel playing=playing tempo=tempo divisions=divisions togglePlay=(action 'togglePlay') onBack=(action 'goBack') changeTempo=(action 'changeTempo')}}
+    </div>
+  {{/master-channel-strip}}
 </div>
 <div class='sequencer-slot'>
-  {{beat-sequencer divisions=sequencerDivisions}}
+  {{beat-sequencer timeSignature=timeSignature playingDivision=playingDivision pattern=selectedPattern selectedChannel=selectedChannel onChange=(action 'setPattern')}}
 </div>
-<div class='transport-panel-slot'>
-  {{transport-panel tempo=tempo division=division}}
-</div>
+
 {{yield}}

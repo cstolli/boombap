@@ -1,17 +1,17 @@
 .main-chassis {
   width: 100%;
   min-height: 500px;
-  min-width: 575px;
+  min-width: 850px;
   background: #CCC;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 10px;
 
   .channel-slot {
-    height: 80%;
+    height: 92%;
     width: 100%;
     min-height: 375px;
     background: #EEE;
@@ -27,7 +27,7 @@
 
   .sequencer-slot {
     width: 100%;
-    height: 10%;
+    height: 8%;
     min-height: 50px;
     background: #DDD;
   }

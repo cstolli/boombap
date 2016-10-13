@@ -1,3 +1,7 @@
+$body-font: 'Megrim';
+$transport-font: 'Megrim';
+$transport-font-size: 16px;
+
 @import 'fonts';
 @import 'components/main-chassis';
 @import 'components/beat-sequencer';
@@ -11,9 +15,8 @@
 @import 'components/transport-panel';
 @import 'components/source-picker';
 
-
 html {
-  font-family: 'Megrim';
+  font-family: $body-font;
   height: 100%;
 
   * {
@@ -22,5 +25,6 @@ html {
 
   body {
     height: 100%;
+    margin: 20px;
   }
 }

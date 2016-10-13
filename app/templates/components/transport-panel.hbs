@@ -1,9 +1,9 @@
 <div class='tempo'>
-  <label contenteditable="true">{{tempo}}</label> BPM
+  <label><input type='number' onInput={{action 'changeTempo'}} value={{tempo}}> BPM</label>
   <div class=divider></div>
   <label>4/4</label>
   <div class=divider></div>
-  <label>{{division}}</label>
+  <label>{{divisions}}</label>
 </div>
 {{#transport-button icon=back}}
   <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
@@ -11,8 +11,8 @@
     <polygon points="36,0 14,20 36,40"></polygon>
   </svg>
 {{/transport-button}}
-{{#transport-button icon=play onPlayClick=(action 'togglePlay')}}
-  {{#if playing}}
+{{#transport-button icon=play togglePlay=(action 'togglePlay')}}
+  {{#unless playing}}
     <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
       <polygon points="10,0 34,20 10,40"></polygon>
     </svg>
@@ -21,6 +21,6 @@
       <polygon points="8,0 16,0 16,40 8,40"></polygon>
       <polygon points="24,0 32,0 32,40 24,40"></polygon>
     </svg>
-  {{/if}}
+  {{/unless}}
 {{/transport-button}}
 {{yield}}

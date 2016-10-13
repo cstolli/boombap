@@ -30,9 +30,9 @@ export default Ember.Component.extend({
   },
   scale: Ember.computed('', function () {
     return [
-      {value: 12, yPos: '8px'},
-      {value: 0, yPos: '23%'},
-      {value: -60, yPos: '100%'}
+      {value: 12, style: Ember.String.htmlSafe('top: 8px;')},
+      {value: 0, style: Ember.String.htmlSafe('top: 23%;')},
+      {value: -60, style: Ember.String.htmlSafe('top: 100%;')}
     ]
   }),
   getSizeRange () {
@@ -50,6 +50,8 @@ export default Ember.Component.extend({
       const range = this.get('range').max - this.get('range').min
       const relativeGain = event.target.value / range
       this.get('onChange')(relativeGain)
+      event.preventDefault()
+      return false
     }
   }
 });

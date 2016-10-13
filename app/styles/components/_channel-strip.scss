@@ -88,10 +88,12 @@
       width: 100%;
       display: flex;
       align-items: center;
+      height: 13%;
 
       h1 {
         position: absolute;
-        top: 0;
+        letter-spacing: -1px;
+        top: 50%;
         width: 100%;
         text-align: center;
         color: #FFAA88;

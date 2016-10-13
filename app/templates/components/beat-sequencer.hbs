@@ -1,4 +1,15 @@
-{{#each divisions as |division|}}
-  {{beat-sequencer-slot division=division.division active=division.active}}
-{{/each}}
+<h2>Channel: {{selectedChannel}}</h2>
+{{#each-in pattern as |key value|}}
+  {{beat-sequencer-slot
+    number=key
+    beat=value.beat
+    division=value.division
+    playingDivision=playingDivision
+    active=value.active
+    onChange=(action 'onChange')
+  }}
+  {{#if (endOfBeat value)}}
+    <div class='divider'>|</div>
+  {{/if}}
+{{/each-in}}
 {{yield}}

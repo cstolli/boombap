@@ -5,6 +5,9 @@ export default Ember.Component.extend({
   classNames: ['channel-strip'],
   classNameBindings: ['focused', 'mute', 'solo'],
   attributeBindings: ['tabindex'],
+  style: Ember.computed('relativeVolume', function () {
+    return Ember.String.htmlSafe(`opacity: ${this.get('relativeVolume')};`)
+  }),
   mute: Ember.computed('channel.mute', function () {
     return this.get('channel.mute')
   }),
@@ -25,6 +28,7 @@ export default Ember.Component.extend({
   actions: {
     onVolumeChange (value) {
       this.get('onVolumeChange')(value, this.get('channelNumber'))
+      return false;
     },
     onMute (event) {
       this.get('onMute')(this.get('channelNumber'))
@@ -62,9 +66,5 @@ export default Ember.Component.extend({
       return
     }
     this.set('relativeVolume', relativeVolume)
-  },
-  focusIn () {
-    this.get('onSelect')(this.get('channel.number'))
-    return false;
   }
 });
