@@ -109,17 +109,29 @@ function toggleChannelSolo(channelNumber) {
   return soloChannel.solo
 }
 
+function createLimiter () {
+  const limiter = context.createDynamicsCompressor()
+  limiter.threshold.value = -0.3; // this is the pitfall, leave some headroom
+  limiter.knee.value = 0.0; // brute force
+  limiter.ratio.value = 20.0; // max compression
+  limiter.attack.value = 0.005; // 5ms attack
+  limiter.release.value = 0.050; // 50ms
+  return limiter
+}
+
 function createMasterChannel (numChannels, options) {
   const source = context.createChannelMerger(2)
   const panner = context.createStereoPanner()
   const gain = context.createGain()
+  const limiter = createLimiter()
   gain.gain.value = 1
   panner.pan.value = 0
   const analyser = context.createAnalyser()
   source.connect(panner)
   panner.connect(gain)
   gain.connect(analyser)
-  analyser.connect(context.destination)
+  analyser.connect(limiter)
+  limiter.connect(context.destination)
   return {
     label: 'master',
     source,

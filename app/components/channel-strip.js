@@ -5,6 +5,7 @@ export default Ember.Component.extend({
   classNames: ['channel-strip'],
   classNameBindings: ['focused', 'mute', 'solo'],
   attributeBindings: ['tabindex'],
+  keyRing: Ember.inject.service(),
   mute: Ember.computed('channel.mute', function () {
     return this.get('channel.mute')
   }),
@@ -20,6 +21,10 @@ export default Ember.Component.extend({
   focused: Ember.computed('selectedChannel', function () {
     return this.get('selectedChannel') === this.get('channel.number')
   }),
+  init () {
+    this._super(...arguments)
+    // this.get('keyRing').listen(this).ignore()
+  },
   eqFrequencies: [
     {hz: 10000, gain: 0},
     {hz: 2000, gain: 0},
@@ -29,7 +34,7 @@ export default Ember.Component.extend({
     onVolumeChange (value) {
       this.get('onVolumeChange')(value, this.get('channelNumber'))
     },
-    onMute (event) {
+    onMute () {
       this.get('onMute')(this.get('channelNumber'))
     },
     onSolo (event) {
@@ -41,8 +46,13 @@ export default Ember.Component.extend({
     onPanChange (value) {
       this.get('onPanChange')(value, this.get('channelNumber'))
     },
-    onTrigger() {
+    onTrigger () {
       this.get('onTrigger')(this.get('channelNumber'))
+    },
+    onLetterM (type, modifiers) {
+      if (this.get('channelNumber') !== this.get('selectedChannel')) return
+      if (type !== 'keyup') return
+      this.actions.onMute.call(this)
     }
   },
   init () {
@@ -75,6 +85,11 @@ export default Ember.Component.extend({
     this.set('relativeVolume', relativeVolume)
   },
   focusIn () {
+    this.get('keyRing').listen(this, .this, 'input')
     this.get('onSelect')(this.get('channel.number'))
+  },
+  focusOut () {
+    this.get('keyRing').stopListening(this)
+    this.get('onSelect')(null)
   }
 });

@@ -3,7 +3,7 @@
 <div class='channel-slot'>
   {{#each channels as |channel index|}}
     {{channel-strip
-      key=key
+      keyEvent=keyEvent
       channel=channel
       channelNumber=channel.number
       gain=channel.gain
@@ -22,7 +22,9 @@
       onSolo=(action 'soloChannel')
     }}
   {{/each}}
+
   {{#master-channel-strip
+    keyEvent=keyEvent
     channel=masterChannel
     classNames='master'
     gain=masterChannel.gain

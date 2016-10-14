@@ -11,21 +11,15 @@ export default Ember.Component.extend({
   playingDivision: 0,
   playing: false,
   soundly: Ember.inject.service('soundly'),
+  keyRing: Ember.inject.service('keyRing'),
   style: Ember.computed('height', function () {
     return `height: ${this.get('height')}px;`
   }),
   init () {
     this._super(...arguments)
   },
-  didReceiveAttrs() {
-    this.handleKeys(this.get('key'))
-  },
-  handleKeys(key) {
-    switch (key) {
-      case '32':  //spacebar
-        this.actions.togglePlay.call(this)
-        break;
-    }
+  didRender () {
+    // this.get('keyRing').listen(this)
   },
   runAnimationLoop() {
     let then = window.performance.now()
@@ -81,7 +75,7 @@ export default Ember.Component.extend({
     return pattern
   },
   selectedPattern: Ember.computed('selectedChannel', 'channels.@each.pattern', function () {
-    const channel = this.get('channels').findBy('number', this.get('selectedChannel'))
+    const channel = this.get('channels').findBy('number', this.get('selectedChannel') || 1)
     const pattern = channel.pattern || this.freshPattern()
     return pattern
   }),
@@ -135,6 +129,12 @@ export default Ember.Component.extend({
         this.runAnimationLoop()
       }
     },
+    onSpacebar (type, modifiers) {
+      if (type === 'keypress') {
+        this.actions.togglePlay.call(this)
+        return null
+      }
+    },
     goBack () {
 
     }
@@ -157,20 +157,5 @@ export default Ember.Component.extend({
       .catch(() => {
         Ember.set(channel, 'triggered', false)
       })
-  },
-  keyPress (event) {
-    switch (event.which) {
-      case 49:
-      case 50:
-      case 51:
-      case 52:
-      case 53:
-      case 54:
-      case 55:
-      case 56:
-      case 57:
-        this.triggerChannel(event.which + 2 - 50)
-        break;
-    }
   }
 });

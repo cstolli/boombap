@@ -1,10 +1,10 @@
 import Ember from 'ember';
 import _ from 'lodash';
-
 export default Ember.Component.extend({
   classNames: ['channel-strip'],
   classNameBindings: ['focused', 'mute', 'solo'],
   attributeBindings: ['tabindex'],
+  keyRing: Ember.inject.service(),
   style: Ember.computed('relativeVolume', function () {
     return Ember.String.htmlSafe(`opacity: ${this.get('relativeVolume')};`)
   }),
@@ -47,6 +47,9 @@ export default Ember.Component.extend({
     var bufferLength = analyser.fftSize;
     var dataArray = new Uint8Array(bufferLength);
     this.animate(analyser, dataArray)
+  },
+  didRender () {
+    // this.get('keyRing').listen(this)
   },
   animate(analyser, dataArray) {
     requestAnimationFrame(() => {

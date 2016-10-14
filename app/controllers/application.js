@@ -97,12 +97,6 @@ export default Ember.Controller.extend({
     })
     this.loadDefaultSoundBank()
     this.set('masterChannel.input', master)
-    Ember.$('body').on('keypress', (event) => {
-      this.set('key', event.which)
-      // event.preventDefault()
-      // return false
-    });
-
   },
   loadDefaultSoundBank() {
     const channels = this.get('channels')
@@ -120,4 +114,4 @@ export default Ember.Controller.extend({
         })
       })
   }
-});
+})
