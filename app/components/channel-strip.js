@@ -85,7 +85,7 @@ export default Ember.Component.extend({
     this.set('relativeVolume', relativeVolume)
   },
   focusIn () {
-    this.get('keyRing').listen(this, .this, 'input')
+    this.get('keyRing').listen(this, null, 'input')
     this.get('onSelect')(this.get('channel.number'))
   },
   focusOut () {
