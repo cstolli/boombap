@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Ember from 'ember'
 
 export default Ember.Component.extend({
   classNames: ['source-picker'],
@@ -17,4 +17,4 @@ export default Ember.Component.extend({
       this.sendAction('onSelectSource', file)
     }
   }
-});
+})

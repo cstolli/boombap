@@ -1,10 +1,14 @@
 import Ember from 'ember'
+import $ from 'jquery'
 
 const keys = [
-  {number: 32,  key: ' ',        action: 'onSpacebar'},
-  {number: 38,  key: 'ArrowUp',  action: 'onUpArrow'},
-  {number: 40,  key: 'ArrowDown',  action: 'onDownArrow'},
-  {number: 77,  key: 'm',  action: 'onLetterM'}
+  {number: 32, key: ' ', action: 'onSpacebar'},
+  {number: 37, key: 'ArrowLeft', action: 'onLeftArrow'},
+  {number: 38, key: 'ArrowUp', action: 'onUpArrow'},
+  {number: 39, key: 'ArrowRight', action: 'onRightArrow'},
+  {number: 40, key: 'ArrowDown', action: 'onDownArrow'},
+  {number: 77, key: 'm', action: 'onLetterM'},
+  {number: 83, key: 's', action: 'onLetterS'}
 ]
 
 export default Ember.Service.extend({
@@ -19,11 +23,10 @@ export default Ember.Service.extend({
       selector,
       exceptions
     }
-    Ember.$(selector || component.$()).on('keypress keyup keydown', this.handleKey.bind(this))
+    Ember.$(component.$(selector)).on('keypress keyup keydown', this.handleKey.bind(this))
   },
-  stopListening (component) {
-    let listener = this.get('listeners')[component.toString()]
-    Ember.$(listener.selector || listener.component.$()).off('keypress keyup keydown')
+  stopListening (component, selector) {
+    Ember.$(component.$(selector)).off('keypress keyup keydown')
     delete this.get('listeners')[component.toString()]
   },
   getModifiers (keyEvent) {
@@ -43,6 +46,7 @@ export default Ember.Service.extend({
     if (!key) return
     return key.action
   },
+
   handleKey (keyEvent) {
     if (!keyEvent) return
     const type = keyEvent.type
@@ -72,4 +76,4 @@ export default Ember.Service.extend({
       }
     })
   }
-});
+})

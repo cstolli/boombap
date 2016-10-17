@@ -1,5 +1,4 @@
 import Ember from 'ember'
-import _ from 'lodash'
 
 export default Ember.Component.extend({
   classNames: ['beat-sequencer'],
@@ -10,8 +9,8 @@ export default Ember.Component.extend({
     return new Array(this.get('timeSignature').numerator)
   }),
   actions: {
-    onChange(division) {
+    onChange (division) {
       this.get('onChange')(division, this.get('selectedChannel'))
     }
   }
-});
+})

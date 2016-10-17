@@ -1,65 +1,57 @@
-import Ember from 'ember';
+import Ember from 'ember'
 
 export default Ember.Component.extend({
   classNames: ['volume-fader'],
   classNameBindings: ['isGrabbed'],
-  range: {min: 0, max: 72},
   isGrabbed: false,
-  gain: 0.9,
   keyRing: Ember.inject.service(),
-  normalizedGain: Ember.computed(function () {
-    return 60 / (this.get('range').max - this.get('range').min)
+  soundly: Ember.inject.service(),
+  decibelRange: {min: -20, max: 6},
+  getRangeSize () {
+    return this.get('decibelRange').max - this.get('decibelRange').min
+  },
+  sliderValue: Ember.computed('volume', function () {
+    return (this.get('volume') - this.get('decibelRange').min) / this.getRangeSize() * 100
   }),
   init () {
     this._super(...arguments)
   },
-  didRender () {
-    this.get('keyRing').listen(this)
+
+  didReceiveAttrs (attrs) {
+    if (this.get('selectedChannel') === this.get('channelNumber')) {
+      this.get('keyRing').listen(this, 'input[type=range]', null)
+    } else {
+      this.get('keyRing').stopListening(this, 'input[type=range]')
+    }
   },
-  volume: Ember.computed('gain', {
-    get(key) {
-      return Math.round(this.get('gain') * (this.get('range').max - this.get('range').min) - 60)
-    },
-    set(key, value) {
-      return value
-    }
-  }),
-  value: Ember.computed('gain', {
-    get(key) {
-      return this.get('gain') * (this.get('range').max - this.get('range').min)
-    },
-    set(key, value) {
-      return value
-    }
-  }),
+
   doubleClick () {
-    this.get('onChange')(this.get('normalizedGain'))
+    this.get('onChange')(0)
   },
+
   scale: Ember.computed('', function () {
     return [
-      {value: 12, style: Ember.String.htmlSafe('top: 8px;')},
-      {value: 0, style: Ember.String.htmlSafe('top: 23%;')},
-      {value: -60, style: Ember.String.htmlSafe('top: 100%;')}
+      {value: this.get('decibelRange').max, style: Ember.String.htmlSafe('top: 8px')},
+      {value: 0, style: Ember.String.htmlSafe('top: 23%')},
+      {value: this.get('decibelRange').min, style: Ember.String.htmlSafe('top: 100%')}
     ]
   }),
-  getSizeRange () {
-    const max = this.$() ? this.$().height() : 0
-    return {min: 0, max}
+
+  getDecibelValue (value) {
+    return Math.ceil(value / 100 * this.getRangeSize() + this.get('decibelRange').min)
   },
-  getSliderHeight () {
-    if (!this.$('.slider')) {
-      return
-    }
-    return this.$('.slider').height()
-  },
+
   actions: {
     sliderChange (event) {
-      const range = this.get('range').max - this.get('range').min
-      const relativeGain = event.target.value / range
-      this.get('onChange')(relativeGain)
+      console.info('----------')
+      console.info('sliderval:' + event.target.value)
+      Ember.run.next(() => {
+        this.get('onChange')(this.getDecibelValue(event.target.value))
+      })
       event.preventDefault()
-      return false
+      return
     },
+
     onUpArrow (type, modifiers) {
       if (this.get('channelNumber') === 'master') return
       if (this.get('selectedChannel') !== this.get('channelNumber')) return
@@ -70,9 +62,10 @@ export default Ember.Component.extend({
           const increment = modifiers.shift ? 10 : 1
           input.val(currentValue + increment)
           input.trigger('input')
-          return null
+          return false
       }
     },
+
     onDownArrow (type, modifiers) {
       if (this.get('channelNumber') === 'master') return
       if (this.get('selectedChannel') !== this.get('channelNumber')) return
@@ -83,8 +76,8 @@ export default Ember.Component.extend({
           const increment = modifiers.shift ? 10 : 1
           input.val(currentValue - increment)
           input.trigger('input')
-          return null
+          return false
       }
     }
   }
-});
+})

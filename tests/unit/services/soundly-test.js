@@ -1,12 +1,21 @@
-import { moduleFor, test } from 'ember-qunit';
+import resolver from './helpers/resolver'
+import { setResolver, setupTest } from 'ember-mocha'
+import { describe, it } from 'mocha'
+import { expect } from 'chai'
 
-moduleFor('service:soundly', 'Unit | Service | soundly', {
-  // Specify the other units that are required for this test.
-  // needs: ['service:foo']
-});
+setResolver(resolver)
 
 // Replace this with your real tests.
-test('it exists', function(assert) {
-  let service = this.subject();
-  assert.ok(service);
-});
+describe('soundly :', function (assert) {
+  setupTest('service:soundly', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  })
+
+  let service = this.subject()
+  assert.ok(service)
+
+  it('exists', function () {
+    expect(service).to.be.ok
+  })
+})

@@ -1,4 +1,4 @@
-{{#each frequencies as |frequency|}}
-  {{eq-knob frequency=frequency}}
+{{#each bands as |band|}}
+  {{eq-knob value=band.gain band=band onEqChange=(action 'onEqChange')}}
 {{/each}}
 {{yield}}

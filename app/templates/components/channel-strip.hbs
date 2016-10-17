@@ -1,9 +1,8 @@
-{{log channel.number}}
 <h1>{{channel.label}}</h1>
 {{source-picker label=sourceLabel output=channel onSelectSource=(action 'onSelectSource')}}
-{{eq-panel frequencies=eqFrequencies}}
+{{eq-panel bands=channel.eq onEqChange=(action 'onEqChange')}}
 {{pan-knob value=pan onPanChange=(action 'onPanChange')}}
-{{volume-fader onChange=(action 'onVolumeChange') gain=gain selectedChannel=selectedChannel channelNumber=channelNumber}}
+{{volume-fader onChange=(action 'onVolumeChange') volume=volume selectedChannel=selectedChannel channelNumber=channelNumber}}
 <div class='mute-solo'>
   <div class='mute' onClick={{action 'onMute'}}>
     <div class='light'></div>

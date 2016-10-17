@@ -20,6 +20,7 @@
     position: relative;
     .light {
       pointer-events: false;
+      opacity: 0;
       background: #FFFFCC;
       position: absolute;
       border-radius: 4px;

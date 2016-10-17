@@ -1,5 +1,4 @@
-{{log volume}}
-<input type='range' value={{value}} onInput={{action 'sliderChange'}} min={{range.min}} max={{range.max}} orient="vertical"/>
+<input type='range' value='{{sliderValue}}' onInput={{action 'sliderChange'}} min='0' max='100' orient="vertical"/>
 <div class='value'>{{volume}}</div>
 <div class='scale'>
   {{#each scale as |tick|}}

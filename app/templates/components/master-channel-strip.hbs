@@ -2,7 +2,7 @@
   <h1>BooMbaP</h1>
   <h1 class='label-light' style={{style}}>BooMbaP</h1>
 </div>
-{{eq-panel frequencies=eqFrequencies}}
+{{eq-panel bands=channel.eq onEqChange=(action 'onEqChange')}}
 {{pan-knob value=pan onPanChange=(action 'onPanChange')}}
-{{volume-fader onChange=(action 'onVolumeChange') gain=gain channelNumber=channelNumber}}
+{{volume-fader onChange=(action 'onVolumeChange') volume=volume channelNumber=channelNumber}}
 {{yield}}

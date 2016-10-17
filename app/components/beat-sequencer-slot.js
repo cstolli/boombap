@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import Ember from 'ember'
 
 export default Ember.Component.extend({
   classNames: ['beat-sequencer-slot'],
@@ -10,4 +10,4 @@ export default Ember.Component.extend({
   click () {
     this.get('onChange')(parseInt(this.get('number'), 10))
   }
-});
+})

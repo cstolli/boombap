@@ -6,7 +6,7 @@
       keyEvent=keyEvent
       channel=channel
       channelNumber=channel.number
-      gain=channel.gain
+      volume=channel.volume
       pan=channel.pan
       mute=channel.mute
       solo=channel.solo
@@ -16,18 +16,18 @@
       onTrigger=(action 'triggerSource')
       onPanChange=(action 'panChannel')
       onVolumeChange=(action 'channelVolume')
+      onEqChange=(action 'eqChange')
       onSelectSource=(action 'selectSource')
       onSelect=(action 'selectChannel')
       onMute=(action 'muteChannel')
       onSolo=(action 'soloChannel')
     }}
   {{/each}}
-
   {{#master-channel-strip
     keyEvent=keyEvent
     channel=masterChannel
     classNames='master'
-    gain=masterChannel.gain
+    volume=masterChannel.volume
     pan=masterChannel.pan
     channelNumber=masterChannel.number
     selectedChannel=selectedChannel

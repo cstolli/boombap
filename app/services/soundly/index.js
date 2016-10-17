@@ -1,202 +1,60 @@
+/**
+*                            _ _
+*  ___  ___  _   _ _ __   __| | |_   _
+* / __|/ _ \| | | | '_ \ / _` | | | | |
+* \__ \ (_) | |_| | | | | (_| | | |_| |
+* |___/\___/ \__,_|_| |_|\__,_|_|\__, |
+*                                |___/
+*
+* @Author: Chris Stoll <chrisstoll>
+* @Date:   2016-10-11T01:25:01-07:00
+* @Email:  chrispstoll@gmail.com
+* @Last modified by:   chrisstoll
+* @Last modified time: 2016-10-16T20:14:31-07:00
+* @License: MIT
+*/
+
+/**
+ * variables
+ */
 const context = new window.AudioContext()
-import Ember from 'ember'
-const Promise = Ember.RSVP.Promise
-import _ from 'lodash'
 
-function trigger(number) {
-  const channel = getChannel(number)
-  const source = context.createBufferSource()
-  const playback = new Promise((resolve, reject) => {
-    source.onended = () => {
-      source.disconnect()
-      resolve()
-    }
-    if (!channel.sample) {
-      reject()
-    } else {
-      source.buffer = channel.sample
-    }
-  })
-  source.connect(channel.source)
-  source.start()
-  return playback
+/**
+ * soundly lib imports
+ */
+import Channel from './channel'
+import Equalizer from './equalizer'
+import Filter from './filter'
+import Mixer from './mixer'
+import Sampler from './sampler'
+import utils from './utils'
+
+function time () {
+  return context.currentTime
 }
 
-function getChannel(channelNumber) {
-  return mixer.channels[channelNumber]
+function initMixer () {
+  Mixer.context = context
+  Mixer.channels.master = Channel.createMasterChannel(Mixer.context, {volume: 0})
 }
 
-function setSample(sample, meta, channelNumber) {
-  getChannel(channelNumber).sample = sample
-  getChannel(channelNumber).sampleMeta = meta
-  return getChannel(channelNumber)
+function initSampler () {
+  Sampler.context = context
+  Sampler.mixer = Mixer
 }
 
-function createChannel (label, options = {}) {
+initMixer()
+initSampler()
 
-  if (!options.number) {
-    throw('A channel must have a number')
-  }
-  const panner = context.createStereoPanner()
-  const splitter = context.createChannelSplitter()
-  const gain = context.createGain()
-  const output = context.createGain()
-  const analyser = context.createAnalyser()
-
-  panner.pan.value = options.pan || 0
-  gain.gain.value = options.gain || 0
-  output.gain.value = 1
-
-  gain.connect(panner)
-  panner.connect(output)
-  output.connect(analyser)
-  analyser.connect(splitter)
-  splitter.connect(getChannel('master').source, 0, 0)
-  splitter.connect(getChannel('master').source, 1, 1)
-  const channel = {
-    label: label || options.label || '',
-    number: options.number,
-    source: gain,
-    mute: options.mute || false,
-    solo: options.solo || false,
-    panner,
-    gain,
-    output,
-    analyser,
-    setSample,
-    trigger
-  }
-  return channel
-}
-
-function toggleChannelMute(channelNumber){
-  const muteChannel = getChannel(channelNumber)
-  const outputGain = muteChannel.output.gain
-  muteChannel.mute = !muteChannel.mute
-  outputGain.value = outputGain.value === 1 ? 0 : 1
-  return muteChannel.mute
-}
-
-function getChannels() {
-  return _.reject(mixer.channels, {label: 'master'})
-}
-
-//TODO: Find the better algorithm here
-function toggleChannelSolo(channelNumber) {
-  const soloChannel = getChannel(channelNumber)
-  soloChannel.solo = !soloChannel.solo
-  soloChannel.output.gain.value = soloChannel.solo ? 1 : 0
-
-  const soloed = _.map(getChannels(), (channel) => {
-    if (
-        channel.output.gain.value === 0 ||
-        channel.solo
-      ) {
-      return channel.solo
-    }
-    channel.output.gain.value = 1 - channel.output.gain.value
-    return channel.solo
-  })
-
-  if (_.filter(soloed, (item) => item).length === 0) {
-    _.map(mixer.channels, (channel) => {
-      if (channel.label === 'master' || channel.mute) {
-        return
-      }
-      channel.output.gain.value = 1
-    })
-  }
-  return soloChannel.solo
-}
-
-function createLimiter () {
-  const limiter = context.createDynamicsCompressor()
-  limiter.threshold.value = -0.3; // this is the pitfall, leave some headroom
-  limiter.knee.value = 0.0; // brute force
-  limiter.ratio.value = 20.0; // max compression
-  limiter.attack.value = 0.005; // 5ms attack
-  limiter.release.value = 0.050; // 50ms
-  return limiter
-}
-
-function createMasterChannel (numChannels, options) {
-  const source = context.createChannelMerger(2)
-  const panner = context.createStereoPanner()
-  const gain = context.createGain()
-  const limiter = createLimiter()
-  gain.gain.value = 1
-  panner.pan.value = 0
-  const analyser = context.createAnalyser()
-  source.connect(panner)
-  panner.connect(gain)
-  gain.connect(analyser)
-  analyser.connect(limiter)
-  limiter.connect(context.destination)
-  return {
-    label: 'master',
-    source,
-    gain,
-    panner,
-    analyser
-  }
-}
-
-function setChannelPan (channelNumber, value) {
-  getChannel(channelNumber).panner.pan.value = value
-}
-
-function setChannelVolume (channelNumber, value) {
-  getChannel(channelNumber).gain.gain.value = value
-}
-
-function loadFileSource (file, channel) {
-  const reader = new FileReader()
-  const result = new Promise((resolve, reject) => {
-    reader.onload = function(e) {
-      context.decodeAudioData(reader.result, (buffer) => {
-        resolve(setSample(buffer, file, channel))
-      })
-    }
-  })
-  reader.readAsArrayBuffer(file)
-  return result
-}
-
-function loadUrlSource (url, channel) {
-  var oReq = new XMLHttpRequest();
-  var meta = {
-    url,
-    name: url.split('/').pop()
-  }
-  const result = new Promise((resolve, reject) => {
-    oReq.onload = (response) => {
-      context.decodeAudioData(response.target.response, (buffer) => {
-        resolve(setSample(buffer, meta, channel))
-      })
-    }
-    oReq.onerror = (err) => {
-      console.warn(`${url} not loaded, error: ${err}`)
-    }
-    oReq.responseType = "arraybuffer";
-    oReq.open("GET", url, true);
-    oReq.send()
-  })
-  return result
-}
-
-const mixer = {
+const soundly = {
   context,
-  channels: {
-    master: createMasterChannel(8)
-  },
-  loadFileSource,
-  loadUrlSource,
-  createChannel,
-  toggleChannelMute,
-  setChannelVolume,
-  setChannelPan,
-  toggleChannelSolo,
-  trigger,
+  Channel,
+  Equalizer,
+  Filter,
+  Mixer,
+  Sampler,
+  time,
+  utils
 }
 
-export default mixer
+export default soundly
