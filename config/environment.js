@@ -1,3 +1,12 @@
+/**
+* @Author: Chris Stoll <chrisstoll>
+* @Date:   2016-10-08T15:42:27-07:00
+* @Email:  chrispstoll@gmail.com
+* @Last modified by:   chrisstoll
+* @Last modified time: 2016-10-17T00:19:50-07:00
+* @License: MIT
+*/
+
 /* jshint node: true */
 
 module.exports = function (environment) {
@@ -5,7 +14,7 @@ module.exports = function (environment) {
     modulePrefix: 'boombap',
     environment: environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: process.env.EMBER_CLI_ELECTRON ? 'hash' : 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

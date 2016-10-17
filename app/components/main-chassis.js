@@ -3,11 +3,13 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T20:19:24-07:00
+* @Last modified time: 2016-10-16T23:04:57-07:00
 * @License: MIT
 */
 
 import Ember from 'ember'
+
+let currentInterval = 1
 
 export default Ember.Component.extend({
   classNames: ['main-chassis'],
@@ -37,17 +39,20 @@ export default Ember.Component.extend({
 
   runAnimationLoop () {
     let then = window.performance.now()
-    let currentInterval = 1
     let now, elapsed
 
-    const loop = () => {
+    this.set('playing', true)
+    const loop = (resolve, reject) => {
       const bps = this.get('tempo') / 60 // turn BPM into BPS
       const bpsInterval = 1000 / (bps * 4)
 
       if (this.get('playing')) {
-        window.requestAnimationFrame(loop)
+        window.requestAnimationFrame(() => {
+          loop(resolve, reject)
+        })
       } else {
-        this.set('playingDivision', 0)
+        // this.set('playingDivision', 0)
+        resolve('stopped')
       }
 
       now = window.performance.now()
@@ -62,7 +67,9 @@ export default Ember.Component.extend({
       }
     }
 
-    loop()
+    return new Promise((resolve, reject) => {
+      loop(resolve, reject)
+    })
   },
 
   sequence (division) {
@@ -157,9 +164,10 @@ export default Ember.Component.extend({
     },
 
     togglePlay () {
+      // currentInterval = 1
       this.set('playing', !this.get('playing'))
       if (this.get('playing')) {
-        this.runAnimationLoop()
+        this.set('player', this.runAnimationLoop())
       }
     },
 
@@ -170,8 +178,12 @@ export default Ember.Component.extend({
       }
     },
 
-    goBack () {
-
+    wheelIt (division) {
+      currentInterval = 1
+      this.set('playing', false)
+      this.get('player').then(() => {
+        this.actions.togglePlay.call(this)
+      })
     }
   },
 

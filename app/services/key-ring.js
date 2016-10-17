@@ -1,3 +1,12 @@
+/**
+* @Author: Chris Stoll <chrisstoll>
+* @Date:   2016-10-13T19:55:12-07:00
+* @Email:  chrispstoll@gmail.com
+* @Last modified by:   chrisstoll
+* @Last modified time: 2016-10-16T21:49:28-07:00
+* @License: MIT
+*/
+
 import Ember from 'ember'
 import $ from 'jquery'
 

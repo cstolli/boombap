@@ -1,3 +1,10 @@
+// @Author: Chris Stoll <chrisstoll>
+// @Date:   2016-10-08T16:15:46-07:00
+// @Email:  chrispstoll@gmail.com
+// @Last modified by:   chrisstoll
+// @Last modified time: 2016-10-16T23:14:43-07:00
+// @License: MIT
+
 .beat-sequencer-slot {
   width: calc(100% / 16 - 20px);
   height: calc(100% - 20px);
@@ -14,8 +21,6 @@
   &.active {
     background-color: #DDDDAA;
   }
-
-
 
   &.playing {
     background-color: #FFFFBA;

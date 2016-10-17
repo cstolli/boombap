@@ -1,17 +1,26 @@
+<!--
+@Author: Chris Stoll <chrisstoll>
+@Date:   2016-10-08T20:01:19-07:00
+@Email:  chrispstoll@gmail.com
+@Last modified by:   chrisstoll
+@Last modified time: 2016-10-16T22:16:53-07:00
+@License: MIT
+-->
+
 <div class='tempo'>
   <label><input type='number' onInput={{action 'changeTempo'}} value={{tempo}}> BPM</label>
   <div class=divider></div>
-  <label>4/4</label>
+  <label>{{timeSignature.numerator}}/{{timeSignature.denominator}}</label>
   <div class=divider></div>
   <label>{{divisions}}</label>
 </div>
-{{#transport-button icon=back}}
+{{#transport-button icon=back onClick=(action 'wheelIt')}}
   <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
     <polygon points="6,0 14,0 14,40 6,40"></polygon>
     <polygon points="36,0 14,20 36,40"></polygon>
   </svg>
 {{/transport-button}}
-{{#transport-button icon=play togglePlay=(action 'togglePlay')}}
+{{#transport-button icon=play onClick=(action 'togglePlay')}}
   {{#unless playing}}
     <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
       <polygon points="10,0 34,20 10,40"></polygon>

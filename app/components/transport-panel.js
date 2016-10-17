@@ -1,3 +1,12 @@
+/**
+* @Author: Chris Stoll <chrisstoll>
+* @Date:   2016-10-08T20:01:19-07:00
+* @Email:  chrispstoll@gmail.com
+* @Last modified by:   chrisstoll
+* @Last modified time: 2016-10-16T22:23:11-07:00
+* @License: MIT
+*/
+
 import Ember from 'ember'
 
 export default Ember.Component.extend({
@@ -27,6 +36,10 @@ export default Ember.Component.extend({
       if (type !== 'keyup') return
       this.actions.togglePlay.call(this)
       return true
+    },
+
+    wheelIt () {
+      this.get('wheelIt')()
     }
   }
 })

@@ -1,3 +1,14 @@
+<!--
+@Author: Chris Stoll <chrisstoll>
+@Date:   2016-10-11T01:25:01-07:00
+@Email:  chrispstoll@gmail.com
+@Last modified by:   chrisstoll
+@Last modified time: 2016-10-16T22:24:13-07:00
+@License: MIT
+-->
+
+
+
 <div class='mixer-slot'>
 </div>
 <div class='channel-slot'>
@@ -36,12 +47,26 @@
     onVolumeChange=(action 'channelVolume')
   }}
     <div class='transport-panel-slot'>
-      {{transport-panel playing=playing tempo=tempo divisions=divisions togglePlay=(action 'togglePlay') onBack=(action 'goBack') changeTempo=(action 'changeTempo')}}
+      {{transport-panel
+        playing=playing
+        tempo=tempo
+        divisions=divisions
+        timeSignature=timeSignature
+        togglePlay=(action 'togglePlay')
+        changeTempo=(action 'changeTempo')
+        wheelIt=(action 'wheelIt')
+      }}
     </div>
   {{/master-channel-strip}}
 </div>
 <div class='sequencer-slot'>
-  {{beat-sequencer timeSignature=timeSignature playingDivision=playingDivision pattern=selectedPattern selectedChannel=selectedChannel onChange=(action 'setPattern')}}
+  {{beat-sequencer
+    timeSignature=timeSignature
+    playingDivision=playingDivision
+    pattern=selectedPattern
+    selectedChannel=selectedChannel
+    onChange=(action 'setPattern')
+  }}
 </div>
 
 {{yield}}

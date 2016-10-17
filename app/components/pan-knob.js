@@ -1,3 +1,12 @@
+/**
+* @Author: Chris Stoll <chrisstoll>
+* @Date:   2016-10-11T01:25:01-07:00
+* @Email:  chrispstoll@gmail.com
+* @Last modified by:   chrisstoll
+* @Last modified time: 2016-10-16T21:49:35-07:00
+* @License: MIT
+*/
+
 import Ember from 'ember'
 
 let lastDragPos = null

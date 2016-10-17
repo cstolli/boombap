@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T19:03:24-07:00
+* @Last modified time: 2016-10-16T21:04:24-07:00
 * @License: MIT
 */
 
@@ -133,7 +133,8 @@ export default Ember.Component.extend({
     this.get('onSelect')(this.get('channel.number'))
   },
 
-  focusOut () {
+  focusOut (event) {
+    console.log(event)
     this.get('onSelect')(null)
   }
 })
