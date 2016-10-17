@@ -1,22 +1,13 @@
-/**
-* @Author: Chris Stoll <chrisstoll>
-* @Date:   2016-10-17T00:14:12-07:00
-* @Email:  chrispstoll@gmail.com
-* @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-17T00:25:01-07:00
-* @License: MIT
-*/
-
 /* jshint node: true */
-'use strict'
+'use strict';
 
-const electron = require('electron')
-const path = require('path')
-const {app, BrowserWindow} = electron
-const dirname = __dirname || path.resolve(path.dirname())
-const emberAppLocation = `file://${dirname}/dist/index.html`
+const electron             = require('electron');
+const path                 = require('path');
+const {app, BrowserWindow} = electron;
+const dirname              = __dirname || path.resolve(path.dirname());
+const emberAppLocation     = `file://${dirname}/dist/index.html`;
 
-let mainWindow = null
+let mainWindow = null;
 
 // Uncomment the lines below to enable Electron's crash reporter
 // For more information, see http://electron.atom.io/docs/api/crash-reporter/
@@ -28,19 +19,19 @@ let mainWindow = null
 //     autoSubmit: true
 // });
 
-app.on('window-all-closed', function onWindowAllClosed () {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
+app.on('window-all-closed', function onWindowAllClosed() {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
 
-app.on('ready', function onReady () {
-  mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600
-  })
+app.on('ready', function onReady() {
+    mainWindow = new BrowserWindow({
+        width: 800,
+        height: 600
+    });
 
-  delete mainWindow.module
+    delete mainWindow.module;
 
     // If you want to open up dev tools programmatically, call
     // mainWindow.openDevTools();
@@ -51,30 +42,30 @@ app.on('ready', function onReady () {
     // Please ensure that you have set the locationType option in the
     // config/environment.js file to 'hash'. For more information,
     // please consult the ember-electron readme.
-  mainWindow.loadURL(emberAppLocation)
+    mainWindow.loadURL(emberAppLocation);
 
     // If a loading operation goes wrong, we'll send Electron back to
     // Ember App entry point
-  mainWindow.webContents.on('did-fail-load', () => {
-    mainWindow.loadURL(emberAppLocation)
-  })
+    mainWindow.webContents.on('did-fail-load', () => {
+        mainWindow.loadURL(emberAppLocation);
+    });
 
-  mainWindow.webContents.on('crashed', () => {
-    console.log('Your Ember app (or other code) in the main window has crashed.')
-    console.log('This is a serious issue that needs to be handled and/or debugged.')
-  })
+    mainWindow.webContents.on('crashed', () => {
+        console.log('Your Ember app (or other code) in the main window has crashed.');
+        console.log('This is a serious issue that needs to be handled and/or debugged.');
+    });
 
-  mainWindow.on('unresponsive', () => {
-    console.log('Your Ember app (or other code) has made the window unresponsive.')
-  })
+    mainWindow.on('unresponsive', () => {
+        console.log('Your Ember app (or other code) has made the window unresponsive.');
+    });
 
-  mainWindow.on('responsive', () => {
-    console.log('The main window has become responsive again.')
-  })
+    mainWindow.on('responsive', () => {
+        console.log('The main window has become responsive again.');
+    });
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+    mainWindow.on('closed', () => {
+        mainWindow = null;
+    });
 
     // Handle an unhandled error in the main thread
     //
@@ -91,9 +82,9 @@ app.on('ready', function onReady () {
     // The correct use of 'uncaughtException' is to perform synchronous cleanup of allocated
     // resources (e.g. file descriptors, handles, etc) before shutting down the process. It is
     // not safe to resume normal operation after 'uncaughtException'.
-  process.on('uncaughtException', (err) => {
-    console.log('An exception in the main thread was not handled.')
-    console.log('This is a serious issue that needs to be handled and/or debugged.')
-    console.log(`Exception: ${err}`)
-  })
-})
+    process.on('uncaughtException', (err) => {
+        console.log('An exception in the main thread was not handled.');
+        console.log('This is a serious issue that needs to be handled and/or debugged.');
+        console.log(`Exception: ${err}`);
+    });
+});

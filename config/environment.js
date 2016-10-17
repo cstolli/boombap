@@ -3,7 +3,7 @@
 * @Date:   2016-10-08T15:42:27-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-17T00:19:50-07:00
+* @Last modified time: 2016-10-17T01:25:16-07:00
 * @License: MIT
 */
 
@@ -13,8 +13,8 @@ module.exports = function (environment) {
   var ENV = {
     modulePrefix: 'boombap',
     environment: environment,
-    rootURL: '/',
-    locationType: process.env.EMBER_CLI_ELECTRON ? 'hash' : 'auto',
+    baseURL: '/',
+    locationType: 'hash',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -29,15 +29,16 @@ module.exports = function (environment) {
   }
 
   if (environment === 'development') {
-    // ENV.APP.LOG_RESOLVER = true
-    // ENV.APP.LOG_ACTIVE_GENERATION = true
-    // ENV.APP.LOG_TRANSITIONS = true
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true
-    // ENV.APP.LOG_VIEW_LOOKUPS = true
+    // ENV.APP.LOG_RESOLVER = true;
+    // ENV.APP.LOG_ACTIVE_GENERATION = true;
+    // ENV.APP.LOG_TRANSITIONS = true;
+    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    // ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 
   if (environment === 'test') {
     // Testem prefers this...
+    ENV.baseURL = '/'
     ENV.locationType = 'none'
 
     // keep test console output quieter
@@ -48,7 +49,6 @@ module.exports = function (environment) {
   }
 
   if (environment === 'production') {
-
   }
 
   return ENV

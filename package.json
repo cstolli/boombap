@@ -68,7 +68,8 @@
     "copy-files": [
       "electron.js",
       "package.json",
-      "dist/*"
+      "dist/*",
+      "public/*"
     ],
     "name": null,
     "platform": null,
