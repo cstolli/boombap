@@ -2,21 +2,32 @@
 // @Date:   2016-10-08T16:15:46-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-16T23:14:43-07:00
+// @Last modified time: 2016-10-17T22:41:26-07:00
 // @License: MIT
 
 .beat-sequencer-slot {
-  width: calc(100% / 16 - 20px);
-  height: calc(100% - 20px);
-  min-height: 30px;
-  min-width: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-grow: 1;
+  margin: 3px;
+  min-width: 18px;
   background-color: #BBB;
   text-align: center;
-  line-height: 240%;
-  color: #FFFFCC;
+  min-height: 30px;
+  padding: 1px 4px;
   border-radius: 2px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2) inset,
               1px 1px 1px 1px #666;
+
+  .number {
+    font-family: $sequencer-slot-font;
+    color: #000088;
+    height: auto;
+    font-size: 12px;
+    display: none;
+  }
 
   &.active {
     background-color: #DDDDAA;
@@ -24,6 +35,5 @@
 
   &.playing {
     background-color: #FFFFBA;
-    color: #CCCCFF;
   }
 }

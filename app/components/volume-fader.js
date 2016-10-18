@@ -1,3 +1,12 @@
+/**
+* @Author: Chris Stoll <chrisstoll>
+* @Date:   2016-10-11T01:25:01-07:00
+* @Email:  chrispstoll@gmail.com
+* @Last modified by:   chrisstoll
+* @Last modified time: 2016-10-17T19:42:03-07:00
+* @License: MIT
+*/
+
 import Ember from 'ember'
 
 export default Ember.Component.extend({
@@ -6,7 +15,7 @@ export default Ember.Component.extend({
   isGrabbed: false,
   keyRing: Ember.inject.service(),
   soundly: Ember.inject.service(),
-  decibelRange: {min: -20, max: 6},
+  decibelRange: {min: -30, max: 6},
   getRangeSize () {
     return this.get('decibelRange').max - this.get('decibelRange').min
   },

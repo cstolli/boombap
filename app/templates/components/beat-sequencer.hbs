@@ -1,15 +1,23 @@
-<h2>Channel: {{selectedChannel}}</h2>
-{{#each-in pattern as |key value|}}
-  {{beat-sequencer-slot
-    number=key
-    beat=value.beat
-    division=value.division
-    playingDivision=playingDivision
-    active=value.active
-    onChange=(action 'onChange')
-  }}
-  {{#if (endOfBeat value)}}
-    <div class='divider'>|</div>
-  {{/if}}
-{{/each-in}}
+<!--
+@Author: Chris Stoll <chrisstoll>
+@Date:   2016-10-08T16:13:29-07:00
+@Email:  chrispstoll@gmail.com
+@Last modified by:   chrisstoll
+@Last modified time: 2016-10-17T22:00:19-07:00
+@License: MIT
+-->
+{{#each sequence as |beat index|}}
+  <div class='beat'>
+    {{#each beat.divisions as |division|}}
+      {{beat-sequencer-slot
+        number=division.number
+        beat=division.beat
+        division=division.division
+        playingDivision=playingDivision
+        active=division.active
+        onChange=(action 'onChange')
+      }}
+    {{/each}}
+  </div>
+{{/each}}
 {{yield}}

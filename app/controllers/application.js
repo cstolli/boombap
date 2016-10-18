@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T21:58:33-07:00
+* @Last modified time: 2016-10-17T20:07:59-07:00
 * @License: MIT
 */
 
@@ -63,7 +63,7 @@ export default Ember.Controller.extend({
     this.get('ajax').request(`${defaultBank}/bank.json`)
       .then((bank) => {
         channels.map((channel) => {
-          const url = `/${defaultBank}/${bank.sounds[channel.number]}`
+          const url = `${defaultBank}/${bank.sounds[channel.number]}`
           this.get('soundly').Sampler.loadUrlSource(url, channel.number)
             .then(() => {
               Ember.run.later(() => {

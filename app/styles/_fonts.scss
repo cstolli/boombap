@@ -1,26 +1,35 @@
+// @Author: Chris Stoll <chrisstoll>
+// @Date:   2016-10-11T21:52:02-07:00
+// @Email:  chrispstoll@gmail.com
+// @Last modified by:   chrisstoll
+// @Last modified time: 2016-10-17T22:36:10-07:00
+// @License: MIT
+
+
+
 @font-face {
   font-family: 'Megrim';
-  src: url('/fonts/Megrim.ttf');
+  src: url('../fonts/Megrim.ttf');
 }
 
 @font-face {
   font-family: 'Bungee Inline';
-  src: url('/fonts/BungeeInline-Regular.ttf');
+  src: url('../fonts/BungeeInline-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Bungee Outline';
-  src: url('/fonts/BungeeOutline-Regular.ttf');
+  src: url('../fonts/BungeeOutline-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Bungee Shade';
-  src: url('/fonts/BungeeShade-Regular.ttf');
+  src: url('fonts/BungeeShade-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Codystar Light';
-  src: url('/fonts/Codystar-Light.ttf');
+  src: url('fonts/Codystar-Light.ttf');
 }
 
 @font-face {
@@ -40,6 +49,7 @@
 
 $body-font: 'Megrim';
 $transport-font: 'Megrim';
+$sequencer-slot-font: 'Codystar Regular';
 $sans-serif-font: Arial, Helvetica, sans-serif;
 
 $font-size-1:8px;

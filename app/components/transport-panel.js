@@ -3,7 +3,7 @@
 * @Date:   2016-10-08T20:01:19-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T22:23:11-07:00
+* @Last modified time: 2016-10-17T20:51:25-07:00
 * @License: MIT
 */
 
@@ -28,6 +28,12 @@ export default Ember.Component.extend({
 
     changeTempo (event) {
       this.get('changeTempo')(event.target.value)
+      event.preventDefault()
+      return false
+    },
+
+    changeDivisions (event) {
+      this.get('changeDivisions')(event.target.value)
       event.preventDefault()
       return false
     },

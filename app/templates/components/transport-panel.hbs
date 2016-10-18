@@ -3,7 +3,7 @@
 @Date:   2016-10-08T20:01:19-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-16T22:16:53-07:00
+@Last modified time: 2016-10-17T21:14:25-07:00
 @License: MIT
 -->
 
@@ -12,7 +12,14 @@
   <div class=divider></div>
   <label>{{timeSignature.numerator}}/{{timeSignature.denominator}}</label>
   <div class=divider></div>
-  <label>{{divisions}}</label>
+  <label>
+    <select onChange={{action 'changeDivisions'}}>
+      {{log divisions}}
+      <option value=3 selected={{eq divisions 3}}>3</option>
+      <option value=4 selected={{eq divisions 4}}>4</option>
+      <option value=8 selected={{eq divisions 8}}>8</option>
+    </select>
+  </label>
 </div>
 {{#transport-button icon=back onClick=(action 'wheelIt')}}
   <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>

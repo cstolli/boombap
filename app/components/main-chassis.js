@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T23:04:57-07:00
+* @Last modified time: 2016-10-17T22:48:27-07:00
 * @License: MIT
 */
 
@@ -16,12 +16,18 @@ export default Ember.Component.extend({
   attributeBindings: ['style'],
   selectedChannel: 1,
   tempo: 80,
-  divisions: 16,
+  divisions: 4,
   patterns: {},
-  timeSignature: {numberator: 4, denominator: 4},
+  timeSignature: {numerator: 4, denominator: 4},
   playingDivision: 0,
+  patternLength: 1,
   playing: false,
-
+  totalDivisions: Ember.computed('patternLength', 'divisions', 'timeSignature', function () {
+    const {numerator} = this.get('timeSignature')
+    const divisions = this.get('divisions')
+    const patternLength = this.get('patternLength')
+    return patternLength * numerator * divisions
+  }),
   soundly: Ember.inject.service('soundly'),
   keyRing: Ember.inject.service('keyRing'),
 
@@ -44,7 +50,7 @@ export default Ember.Component.extend({
     this.set('playing', true)
     const loop = (resolve, reject) => {
       const bps = this.get('tempo') / 60 // turn BPM into BPS
-      const bpsInterval = 1000 / (bps * 4)
+      const bpsInterval = 1000 / (bps * this.get('divisions'))
 
       if (this.get('playing')) {
         window.requestAnimationFrame(() => {
@@ -60,7 +66,7 @@ export default Ember.Component.extend({
       if (elapsed > bpsInterval || elapsed === 0) {
         this.sequence(currentInterval)
         currentInterval++
-        if (currentInterval === this.get('divisions') + 1) {
+        if (currentInterval === this.get('totalDivisions') + 1) {
           currentInterval = 1
         }
         then = now - (elapsed % bpsInterval)
@@ -75,7 +81,7 @@ export default Ember.Component.extend({
   sequence (division) {
     this.set('playingDivision', division)
     this.get('channels').map((channel) => {
-      if (!channel.pattern) {
+      if (!channel.pattern || !channel.pattern[division]) {
         return
       }
       if (channel.pattern[division].active) {
@@ -86,10 +92,10 @@ export default Ember.Component.extend({
 
   freshPattern () {
     const pattern = Ember.Object.create({})
-    for (let x = 1; x <= this.get('divisions'); x++) {
+    for (let x = 1; x <= this.get('totalDivisions'); x++) {
       pattern.set(x + '', Ember.Object.create({
-        beat: Math.ceil(x / 4),
-        division: x % 4 || 4,
+        beat: Math.ceil(x / this.get('divisions')),
+        division: x % this.get('divisions') || this.get('divisions'),
         active: false
       }))
     }
@@ -128,12 +134,17 @@ export default Ember.Component.extend({
     setPattern (division, channelNumber) {
       const channel = this.get('channels').findBy('number', channelNumber) || this.get('masterChannel')
       const pattern = channel.pattern || this.freshPattern()
+      pattern[division] = pattern[division] || Ember.Object.create({active: false, division: division})
       pattern[division].set('active', !pattern[division].get('active'))
       Ember.set(channel, 'pattern', pattern)
     },
 
     changeTempo (tempo) {
       this.set('tempo', parseInt(tempo, 10))
+    },
+
+    changeDivisions (divisions) {
+      this.set('divisions', parseInt(divisions, 10))
     },
 
     triggerSource (channelNumber) {

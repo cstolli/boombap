@@ -43,12 +43,13 @@
     "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "^2.8.0",
-    "ember-electron": "git://github.com/felixrieseberg/ember-electron.git#452ff602b3ecf9b087ac11383af5860a57ccf1e1",
+    "ember-electron": "1.10.8",
     "ember-export-application-global": "^1.0.5",
     "ember-inspector": "2.0.3",
     "ember-load-initializers": "^0.5.1",
     "ember-lodash": "0.0.10",
     "ember-resolver": "^2.0.3",
+    "ember-truth-helpers": "1.2.0",
     "ember-welcome-page": "^1.0.1",
     "emberfire": "2.0.4",
     "eslint": "^3.8.0",
@@ -67,9 +68,7 @@
     "WHAT IS THIS?": "Please see the README.md",
     "copy-files": [
       "electron.js",
-      "package.json",
-      "dist/*",
-      "public/*"
+      "package.json"
     ],
     "name": null,
     "platform": null,
