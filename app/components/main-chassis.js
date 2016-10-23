@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-17T22:48:27-07:00
+* @Last modified time: 2016-10-22T23:42:34-07:00
 * @License: MIT
 */
 
@@ -41,6 +41,19 @@ export default Ember.Component.extend({
 
   didRender () {
     // this.get('keyRing').listen(this)
+  },
+
+  inflatePattern (pattern) {
+    const divs = this.get('divisions')
+    const beats = this.get('timeSignature').numerator
+    return [...Array(divs * beats).keys()].map((emtpy, div) => {
+      if (pattern.get(`${div}`)) return pattern.get(`${div}`)
+      return Ember.set(pattern, `${div}`, Ember.Object.create({
+        active: false,
+        beat: Math.ceil(div / beats),
+        division: div + 1
+      }))
+    })
   },
 
   runAnimationLoop () {
@@ -105,6 +118,7 @@ export default Ember.Component.extend({
   selectedPattern: Ember.computed('selectedChannel', 'channels.@each.pattern', function () {
     const channel = this.get('channels').findBy('number', this.get('selectedChannel') || 1)
     const pattern = channel.pattern || this.freshPattern()
+    this.inflatePattern(pattern)
     return pattern
   }),
 
@@ -134,9 +148,9 @@ export default Ember.Component.extend({
     setPattern (division, channelNumber) {
       const channel = this.get('channels').findBy('number', channelNumber) || this.get('masterChannel')
       const pattern = channel.pattern || this.freshPattern()
-      pattern[division] = pattern[division] || Ember.Object.create({active: false, division: division})
+      pattern[division] = pattern[division] || Ember.Object.create({division: division})
       pattern[division].set('active', !pattern[division].get('active'))
-      Ember.set(channel, 'pattern', pattern)
+      // Ember.set(channel, 'pattern', pattern)
     },
 
     changeTempo (tempo) {
@@ -145,6 +159,7 @@ export default Ember.Component.extend({
 
     changeDivisions (divisions) {
       this.set('divisions', parseInt(divisions, 10))
+      this.inflatePattern(this.get('selectedPattern'))
     },
 
     triggerSource (channelNumber) {

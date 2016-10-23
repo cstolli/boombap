@@ -3,7 +3,7 @@
 @Date:   2016-10-08T20:01:19-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-17T21:14:25-07:00
+@Last modified time: 2016-10-22T22:55:51-07:00
 @License: MIT
 -->
 
@@ -15,9 +15,12 @@
   <label>
     <select onChange={{action 'changeDivisions'}}>
       {{log divisions}}
-      <option value=3 selected={{eq divisions 3}}>3</option>
+      {{#each beatDivisions as |option|}}
+        <option value={{option}} selected={{eq divisions option}}>{{option}}</option>
+      {{/each}}
+      <!-- <option value=3 selected={{eq divisions 3}}>6</option>
       <option value=4 selected={{eq divisions 4}}>4</option>
-      <option value=8 selected={{eq divisions 8}}>8</option>
+      <option value=8 selected={{eq divisions 8}}>8</option> -->
     </select>
   </label>
 </div>

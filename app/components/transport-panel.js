@@ -3,7 +3,7 @@
 * @Date:   2016-10-08T20:01:19-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-17T20:51:25-07:00
+* @Last modified time: 2016-10-22T22:53:20-07:00
 * @License: MIT
 */
 
@@ -12,7 +12,7 @@ import Ember from 'ember'
 export default Ember.Component.extend({
   classNames: ['transport-panel'],
   classNameBindings: ['playing'],
-
+  beatDivisions: [3, 4, 6, 8],
   keyRing: Ember.inject.service(),
 
   didRender () {
