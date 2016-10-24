@@ -1,0 +1,13 @@
+{
+  "url": "sounds/drums",
+  "sounds": {
+    "1": "808-Kicks01.wav",
+    "2": "808-Snare13.wav",
+    "3": "808-Clap07.wav",
+    "4": "808-Clap15.wav",
+    "5": "808-HiHats13.wav",
+    "6": "808-Tom4.wav",
+    "7": "808-Tom3.wav",
+    "8": "808-Tom5.wav"
+  }
+}

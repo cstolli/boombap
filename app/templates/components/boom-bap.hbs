@@ -1,0 +1,75 @@
+<!--
+@Author: Chris Stoll <chrisstoll>
+@Date:   2016-10-11T01:25:01-07:00
+@Email:  chrispstoll@gmail.com
+@Last modified by:   chrisstoll
+@Last modified time: 2016-10-23T16:13:24-07:00
+@License: MIT
+-->
+
+<div class='mixer-slot'>
+</div>
+<div class='channel-slot'>
+
+  {{#each channels as |channel index|}}
+    {{channel-strip
+      keyEvent=keyEvent
+      channel=channel
+      channelNumber=channel.number
+      volume=channel.volume
+      pan=channel.pan
+      mute=channel.mute
+      solo=channel.solo
+      triggered=channel.triggered
+      sourceLabel=channel.sourceLabel
+      selectedChannel=selectedChannel
+      onTrigger=(action 'triggerSource')
+      onPanChange=(action 'panChannel')
+      onVolumeChange=(action 'channelVolume')
+      onEqChange=(action 'eqChange')
+      onSelectSource=(action 'selectSource')
+      onSelect=(action 'selectChannel')
+      onMute=(action 'muteChannel')
+      onSolo=(action 'soloChannel')
+    }}
+  {{/each}}
+  {{#master-channel-strip
+    keyEvent=keyEvent
+    channel=masterChannel
+    classNames='master'
+    volume=masterChannel.volume
+    pan=masterChannel.pan
+    channelNumber=masterChannel.number
+    selectedChannel=selectedChannel
+    onPanChange=(action 'panChannel')
+    onSelect=(action 'selectChannel')
+    onVolumeChange=(action 'channelVolume')
+    onEqChange=(action 'eqChange')
+  }}
+    <div class='transport-panel-slot'>
+      {{transport-panel
+        playing=playing
+        tempo=project.tempo
+        divisions=project.divisions
+        timeSignature=project.timeSignature
+        togglePlay=(action 'togglePlay')
+        changeTempo=(action 'changeTempo')
+        changeDivisions=(action 'changeDivisions')
+        wheelIt=(action 'wheelIt')
+      }}
+    </div>
+  {{/master-channel-strip}}
+</div>
+<div class='sequencer-slot'>
+  {{beat-sequencer
+    timeSignature=project.timeSignature
+    playingDivision=playingDivision
+    pattern=selectedPattern
+    divisions=project.divisions
+    selectedChannel=selectedChannel
+    length=pattern.length
+    onChange=(action 'setPattern')
+  }}
+</div>
+
+{{yield}}

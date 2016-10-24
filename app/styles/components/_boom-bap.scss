@@ -1,0 +1,41 @@
+// @Author: Chris Stoll <chrisstoll>
+// @Date:   2016-10-08T16:08:04-07:00
+// @Email:  chrispstoll@gmail.com
+// @Last modified by:   chrisstoll
+// @Last modified time: 2016-10-23T16:15:07-07:00
+// @License: MIT
+
+.main-chassis {
+  width: 100%;
+  min-height: 500px;
+  min-width: 850px;
+  background: #CCC;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px;
+
+  .channel-slot {
+    height: 92%;
+    width: 100%;
+    min-height: 375px;
+    background: #EEE;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 1px 0px 18px -3px #8888aa inset;
+    border-radius: 2px;
+    margin-bottom: 4px;
+    border: solid 1px #afafaf;
+  }
+
+  .sequencer-slot {
+    width: 100%;
+    height: auto;
+    min-height: 50px;
+    background: #DDD;
+  }
+}

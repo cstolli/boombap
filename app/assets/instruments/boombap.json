@@ -1,0 +1,28 @@
+{
+  "name": "boombap",
+  "component": "boom-bap",
+  "defaults": {
+    "eqBands": [
+      {"number": 1, "type": "peaking", "gain": 0, "frequency": 10000, "Q": 0.5, "detune": 0},
+      {"number": 2, "type": "peaking", "gain": 0, "frequency": 3000, "Q": 0.5, "detune": 0},
+      {"number": 3, "type": "peaking", "gain": 0, "frequency": 80, "Q": 0.5, "detune": 0}
+    ],
+    "channels": [
+      {"note": "C3", "number": 1, "label": "1", "pan": 0, "mute": false, "solo": false, "volume": -2},
+      {"note": "D3", "number": 2, "label": "2", "pan": -0.3, "mute": false, "solo": false, "volume": 1},
+      {"note": "E3", "number": 3, "label": "3", "pan": 0.3, "mute": false, "solo": false, "volume": -10},
+      {"note": "F3", "number": 4, "label": "4", "pan": 0.1, "mute": false, "solo": false, "volume": -10},
+      {"note": "G3", "number": 5, "label": "5", "pan": -0.1, "mute": false, "solo": false, "volume": -10},
+      {"note": "A3", "number": 6, "label": "6", "pan": -0.5, "mute": false, "solo": false, "volume": -10},
+      {"note": "B3", "number": 7, "label": "7", "pan": 0, "mute": false, "solo": false, "volume": -10},
+      {"note": "C4", "number": 8, "label": "8", "pan": 0.5, "mute": false, "solo": false, "volume": -10}
+    ],
+    "masterChannel": {
+      "number": "master",
+      "pan": 0,
+      "label": "Master",
+      "mute": false,
+      "volume": 0
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Ppphat",
+  "tempo": 80,
+  "timeSignature": {
+    "num": 4,
+    "denom": 4
+  },
+  "key": "Am",
+  "divisions": 4,
+  "tracks": [
+    {
+      "instrument": {
+        "name": "boombap",
+        "pattern": "pattern-a",
+        "library": "drums/808-1"
+      },
+      "name": "Drums"
+    }
+  ],
+  "patterns": {
+    "name": "pattern-a",
+  }
+}
