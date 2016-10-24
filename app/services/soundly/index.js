@@ -10,7 +10,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T20:14:31-07:00
+* @Last modified time: 2016-10-23T15:31:28-07:00
 * @License: MIT
 */
 
@@ -35,7 +35,14 @@ function time () {
 
 function initMixer () {
   Mixer.context = context
-  Mixer.channels.master = Channel.createMasterChannel(Mixer.context, {volume: 0})
+  Mixer.channels.master = Channel.createMasterChannel(Mixer.context, {
+    volume: 0,
+    eq: [
+      {number: 1, type: 'peaking', gain: 0, frequency: 10000, Q: 0.5, detune: 0},
+      {number: 2, type: 'peaking', gain: 0, frequency: 3000, Q: 0.5, detune: 0},
+      {number: 3, type: 'peaking', gain: 0, frequency: 80, Q: 0.5, detune: 0}
+    ]
+  })
 }
 
 function initSampler () {

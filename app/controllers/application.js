@@ -3,74 +3,36 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-17T20:07:59-07:00
+* @Last modified time: 2016-10-23T16:02:46-07:00
 * @License: MIT
 */
 
 import Ember from 'ember'
 import _ from 'lodash'
-import patterns from '../assets/patterns/pattern-a'
 
-const channels = [
-  {'number': 1, 'pattern': patterns.kick, 'label': '1', pan: 0, 'mute': false, 'solo': false, 'volume': -2, input: {}},
-  {'number': 2, 'label': '2', pan: -0.3, 'mute': false, 'solo': false, 'volume': 1, input: {}},
-  {'number': 3, 'pattern': patterns.clap, 'label': '3', pan: 0.3, 'mute': false, 'solo': false, 'volume': -10, input: {}},
-  {'number': 4, 'label': '4', pan: 0.1, 'mute': false, 'solo': false, 'volume': -10, input: {}},
-  {'number': 5, 'pattern': patterns.hihat, 'label': '5', pan: -0.1, 'mute': false, 'solo': false, 'volume': -10, input: {}},
-  {'number': 6, 'label': '6', pan: -0.5, 'mute': false, 'solo': false, 'volume': -10, input: {}},
-  {'number': 7, 'label': '7', pan: 0, 'mute': false, 'solo': false, 'volume': -10, input: {}},
-  {'number': 8, 'label': '8', pan: 0.5, 'mute': false, 'solo': false, 'volume': -10, input: {}}
-]
+import project from '../assets/projects/beat-1/beat-1'
+import instruments from '../assets/instruments'
+import patterns from '../assets/projects/beat-1/patterns'
 
-const bands = [
-  {number: 1, type: 'peaking', gain: 0, frequency: 10000, Q: 0.5, detune: 0},
-  {number: 2, type: 'peaking', gain: 0, frequency: 3000, Q: 0.5, detune: 0},
-  {number: 3, type: 'peaking', gain: 0, frequency: 80, Q: 0.5, detune: 0}
-]
-
-channels.map(channel => {
-  channel.eq = _.clone(bands.map((band) => _.clone(band)))
+// inflate project instruments
+project.tracks.forEach((track) => {
+  if (!instruments[track.instrument.name]) throw new Error(`${track.instrument.name} is not a HeckaBeats instruments`)
+  track.instrument = _.defaults(track.instrument, instruments[track.instrument.name])
 })
 
-const masterChannel = {
-  eq: bands,
-  number: 'master',
-  pan: 0,
-  'label': 'Master',
-  'mute': false,
-  volume: 0,
-  input: null
-}
+// inflate project patterns
+project.tracks.forEach((track) => {
+  track.instrument.pattern = Ember.Object.create(
+    _.defaults(track.instrument, patterns[track.instrument.pattern])
+  )
+})
 
 export default Ember.Controller.extend({
   soundly: Ember.inject.service(),
   ajax: Ember.inject.service(),
-  channels,
-  masterChannel,
-
-  init () {
-    this._super(...arguments)
-    const soundly = this.get('soundly')
-    this.get('channels').map((channel) => {
-      channel.input = soundly.Mixer.addChannel(channel.label, channel)
-    })
-    this.loadDefaultSoundBank()
-  },
-
-  loadDefaultSoundBank () {
-    const channels = this.get('channels')
-    const defaultBank = 'sounds/drums'
-    this.get('ajax').request(`${defaultBank}/bank.json`)
-      .then((bank) => {
-        channels.map((channel) => {
-          const url = `${defaultBank}/${bank.sounds[channel.number]}`
-          this.get('soundly').Sampler.loadUrlSource(url, channel.number)
-            .then(() => {
-              Ember.run.later(() => {
-                Ember.set(channel, 'sourceLabel', channel.input.sampleMeta.name)
-              })
-            })
-        })
-      })
-  }
+  playingDivision: 0,
+  patterns,
+  timeSignature: {num: 4, denom: 4},
+  project: Ember.Object.create(project),
+  instruments: Ember.Object.create(instruments)
 })

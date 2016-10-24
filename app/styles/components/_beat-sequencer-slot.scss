@@ -2,7 +2,7 @@
 // @Date:   2016-10-08T16:15:46-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-17T22:41:26-07:00
+// @Last modified time: 2016-10-23T23:44:13-07:00
 // @License: MIT
 
 .beat-sequencer-slot {
@@ -12,10 +12,11 @@
   justify-content: flex-end;
   flex-grow: 1;
   margin: 3px;
-  min-width: 18px;
+  min-width: 14px;
+  max-width: 40px;
   background-color: #BBB;
   text-align: center;
-  min-height: 30px;
+  min-height: 26px;
   padding: 1px 4px;
   border-radius: 2px;
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2) inset,

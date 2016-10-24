@@ -2,7 +2,7 @@
 // @Date:   2016-10-08T16:15:32-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-17T22:15:47-07:00
+// @Last modified time: 2016-10-23T23:41:32-07:00
 // @License: MIT
 
 
@@ -13,20 +13,42 @@
   background: #AAA;
   padding: 10px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   border-radius: 2px;
+
+  .bar {
+    display: flex;
+    width: 100%;
+    max-height: 40px;
+    align-items: center;
+
+    h3 {
+      flex-basis: 1%;
+      min-width: 10px;
+      text-align: right;
+      margin-right: 0px;
+      font-family: $sequencer-bar-font;
+      background: #666;
+      font-size: 13px;
+      padding: 11px;
+      border-radius: 8px 2px 2px 8px;
+      color: white;
+    }
+  }
 
   .beat {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-radius: 3px;
+    border-radius: 2px;
     background: #888;
     padding: 3px 4px;
-    margin: 2px;
+    margin: 1px;
     flex-grow: 1;
+    flex-basis: 24%;
+
     h1 {
       font-size: 18px;
       font-weight: bold;

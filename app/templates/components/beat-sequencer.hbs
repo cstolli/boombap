@@ -3,20 +3,31 @@
 @Date:   2016-10-08T16:13:29-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-17T22:00:19-07:00
+@Last modified time: 2016-10-23T23:28:39-07:00
 @License: MIT
 -->
-{{#each sequence as |beat index|}}
-  <div class='beat'>
-    {{#each beat.divisions as |division|}}
-      {{beat-sequencer-slot
-        number=division.number
-        beat=division.beat
-        division=division.division
-        playingDivision=playingDivision
-        active=division.active
-        onChange=(action 'onChange')
-      }}
+<!--TODO: figure this out-->
+{{#each sequence as |bar bIndex|}}
+  <div class='bar'>
+    <h3>{{bar.bar}}</h3>
+    {{#each bar.beats  as |beat index|}}
+      <div class='beat'>
+        {{#each beat.divisions as |division|}}
+          {{beat-sequencer-slot
+            number=division.number
+            bar=division.bar
+            beat=division.beat
+            division=division.division
+            playingDivision=playingDivision
+            note=division.note
+            location=division.location
+            classNames=(if division.note 'active')
+            active=division.active
+            number=division.number
+            onChange=(action 'onChange')
+          }}
+        {{/each}}
+      </div>
     {{/each}}
   </div>
 {{/each}}

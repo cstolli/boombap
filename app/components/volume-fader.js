@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-17T19:42:03-07:00
+* @Last modified time: 2016-10-23T21:15:21-07:00
 * @License: MIT
 */
 
@@ -52,8 +52,6 @@ export default Ember.Component.extend({
 
   actions: {
     sliderChange (event) {
-      console.info('----------')
-      console.info('sliderval:' + event.target.value)
       Ember.run.next(() => {
         this.get('onChange')(this.getDecibelValue(event.target.value))
       })

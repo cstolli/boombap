@@ -3,18 +3,18 @@
 @Date:   2016-10-08T20:01:19-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-22T22:55:51-07:00
+@Last modified time: 2016-10-23T16:13:29-07:00
 @License: MIT
 -->
 
 <div class='tempo'>
   <label><input type='number' onInput={{action 'changeTempo'}} value={{tempo}}> BPM</label>
   <div class=divider></div>
-  <label>{{timeSignature.numerator}}/{{timeSignature.denominator}}</label>
+  <label>{{timeSignature.num}}/{{timeSignature.denom}}</label>
   <div class=divider></div>
   <label>
     <select onChange={{action 'changeDivisions'}}>
-      {{log divisions}}
+    
       {{#each beatDivisions as |option|}}
         <option value={{option}} selected={{eq divisions option}}>{{option}}</option>
       {{/each}}

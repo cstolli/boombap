@@ -9,7 +9,7 @@
 * @Date:   2016-10-16T18:25:20-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T20:42:15-07:00
+* @Last modified time: 2016-10-23T21:15:38-07:00
 * @License: MIT
 */
 
@@ -45,8 +45,6 @@ function setChannelPan (channelNumber, value) {
 }
 
 function setChannelVolume (channelNumber, value) {
-  console.info(`db: ${value}`)
-  console.info(`gain: ${utils.decibelsToGain(value)}`)
   getChannel(channelNumber).gain.gain.value = utils.decibelsToGain(value)
 }
 
@@ -69,7 +67,6 @@ function setChannelEq (channelNumber, bandNumber, attr, value) {
     return
   }
   band[attr].value = value
-  // console.info(`set ${attr} on ${band.frequency.value} to ${band.gain.value}`)
 }
 // TODO: Find the better algorithm here
 function toggleChannelSolo (channelNumber) {

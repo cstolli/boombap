@@ -3,15 +3,18 @@
 @Date:   2016-10-08T16:03:34-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-16T21:50:01-07:00
+@Last modified time: 2016-10-23T16:15:42-07:00
 @License: MIT
 -->
 
-{{main-chassis
-  height=630
+{{#each project.tracks as |track|}}
+<h4>{{track.name}}</h4>
+{{component track.instrument.component
+  height=730
+  pattern=track.instrument.pattern
   context=context
-  channels=channels
   keyEvent=keyEvent
-  masterChannel=masterChannel
+  project=project
 }}
+{{/each}}
 {{outlet}}

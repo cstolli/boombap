@@ -32,8 +32,8 @@ describeComponent(
       args = null
       props = {
         timeSignature: {
-          numerator: 4,
-          denominator: 4
+          num: 4,
+          denom: 4
         },
         playingDivision: 1,
         pattern: patternA.kick,

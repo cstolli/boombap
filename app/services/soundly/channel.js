@@ -9,7 +9,7 @@
 * @Date:   2016-10-16T17:52:06-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T20:55:54-07:00
+* @Last modified time: 2016-10-23T15:32:02-07:00
 * @License: MIT
 */
 
@@ -75,10 +75,12 @@ function createMasterChannel (context, options) {
   const panner = context.createStereoPanner()
   const gain = context.createGain()
   const limiter = Compressor.createLimiter(context)
+  const equalizer = Equalizer.createEqualizer(context, options.eq)
   gain.gain.value = utils.decibelsToGain(options.volume)
   panner.pan.value = 0
   const analyser = context.createAnalyser()
-  source.connect(panner)
+  source.connect(equalizer.input)
+  equalizer.output.connect(panner)
   panner.connect(gain)
   gain.connect(analyser)
   analyser.connect(limiter)
@@ -88,7 +90,8 @@ function createMasterChannel (context, options) {
     source,
     gain,
     panner,
-    analyser
+    analyser,
+    equalizer
   }
 }
 

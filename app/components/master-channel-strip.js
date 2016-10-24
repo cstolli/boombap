@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T19:05:00-07:00
+* @Last modified time: 2016-10-23T15:24:25-07:00
 * @License: MIT
 */
 
@@ -53,8 +53,8 @@ export default Ember.Component.extend({
       this.get('onPanChange')(value, this.get('channelNumber'))
     },
 
-    onEqChange (value) {
-      this.get('onEqChange')(value)
+    onEqChange () {
+      this.get('onEqChange')(...arguments, 'master')
     }
   },
 
