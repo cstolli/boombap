@@ -1,0 +1,53 @@
+<!--
+@Author: Chris Stoll <chrisstoll>
+@Date:   2016-10-24T19:42:15-07:00
+@Email:  chrispstoll@gmail.com
+@Last modified by:   chrisstoll
+@Last modified time: 2016-10-26T00:03:53-07:00
+@License: MIT
+-->
+
+<div class='transport-panel-slot'>
+
+  {{#source-picker accept=".beat" label=sourceLabel onSelectSource=(action 'onSelectSource')}}
+    {{project.name}}
+    <a download='{{project.name}}.beat' href='data:,{{projectData}}'>
+      <span data-icon class='icon-cloud-download'></span>
+    </a>
+  {{/source-picker}}
+
+  {{transport-panel
+    playing=playing
+    location=location
+    tempo=project.tempo
+    divisions=project.divisions
+    midiEvent=midiEvent
+    midiInputs=midiInputs
+    timeSignature=project.timeSignature
+    stopPlay=(action 'stopPlay')
+    togglePlay=(action 'togglePlay')
+    changeTempo=(action 'changeTempo')
+    changeDivisions=(action 'changeDivisions')
+    wheelIt=(action 'wheelIt')
+  }}
+</div>
+{{#each project.tracks as |track index|}}
+  <h4>{{track.name}}</h4>
+  {{component track.instrument.component
+    height=730
+    pattern=track.instrument.pattern
+    keyEvent=keyEvent
+    project=project
+    playing=playing
+    midiEvent=midiEvent
+    midiInputs=midiInputs
+    index=index
+    track=track
+    restart=restart
+    stop=stop
+    togglePlay=(action 'togglePlay')
+    currentInterval=currentInterval
+  }}
+{{/each}}
+{{outlet}}
+{{yield}}

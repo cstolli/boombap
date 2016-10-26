@@ -1,7 +1,18 @@
+// @Author: Chris Stoll <chrisstoll>
+// @Date:   2016-10-09T02:33:01-07:00
+// @Email:  chrispstoll@gmail.com
+// @Last modified by:   chrisstoll
+// @Last modified time: 2016-10-26T00:16:46-07:00
+// @License: MIT
+
 .transport-panel-slot {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
+
+  .source-picker {
+    flex-basis: 20%;
+  }
 
   .transport-panel {
     display: flex;
@@ -11,7 +22,7 @@
     justify-content: space-between;
     border-radius: 2px;
     background: transparent;
-    margin-top: 8px;
+    height: 25px;
     width: 80%;
 
     .label {
@@ -37,16 +48,25 @@
       justify-content: center;
       border-radius: 2px;
       flex-wrap: wrap;
+      height: 25px;
+      padding: 3px;
+      margin-left: 8px;
 
       input {
         background: none;
         border: none;
-        width: 50%;
+        width: 40px;
         display: inline;
         text-align: right;
         font-family: $transport-font;
         font-size: $transport-font-size;
       }
+    }
+
+    .buttons {
+      flex-basis: 30%;
+      display:flex;
+      flex-direction: row;
     }
   }
 }

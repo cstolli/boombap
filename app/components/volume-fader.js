@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-23T21:15:21-07:00
+* @Last modified time: 2016-10-24T21:09:34-07:00
 * @License: MIT
 */
 
@@ -27,6 +27,7 @@ export default Ember.Component.extend({
   },
 
   didReceiveAttrs (attrs) {
+    this._super(...arguments)
     if (this.get('selectedChannel') === this.get('channelNumber')) {
       this.get('keyRing').listen(this, 'input[type=range]', null)
     } else {

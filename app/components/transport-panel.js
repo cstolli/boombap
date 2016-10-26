@@ -3,7 +3,7 @@
 * @Date:   2016-10-08T20:01:19-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-22T22:53:20-07:00
+* @Last modified time: 2016-10-25T23:35:49-07:00
 * @License: MIT
 */
 
@@ -46,6 +46,10 @@ export default Ember.Component.extend({
 
     wheelIt () {
       this.get('wheelIt')()
+    },
+
+    stopPlay () {
+      this.get('stopPlay')()
     }
   }
 })

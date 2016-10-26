@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-23T21:43:29-07:00
+* @Last modified time: 2016-10-25T23:37:33-07:00
 * @License: MIT
 */
 
@@ -21,7 +21,7 @@ masterChannel.eq = _.clone(eqBands.map((band) => _.clone(band)))
 let currentInterval = 1
 
 export default Ember.Component.extend({
-  classNames: ['main-chassis'],
+  classNames: ['boom-bap'],
   attributeBindings: ['style'],
   playingDivision: 0,
   channels,
@@ -30,7 +30,7 @@ export default Ember.Component.extend({
   ajax: Ember.inject.service(),
   soundly: Ember.inject.service('soundly'),
   keyRing: Ember.inject.service('keyRing'),
-  playing: false,
+  midiChannels: [...Array(10).keys()].map((index) => index + 1),
   totalDivisions: Ember.computed('pattern.patternLength', 'project.divisions', 'project.timeSignature', function () {
     const {num} = this.get('project.timeSignature')
     const divisions = this.get('project.divisions')
@@ -40,6 +40,10 @@ export default Ember.Component.extend({
 
   style: Ember.computed('height', function () {
     return `height: ${this.get('height')}px;`
+  }),
+
+  midiChannel: Ember.computed('track', 'index', function () {
+    return this.get('track').midiChannel || this.get('index') + 1
   }),
 
   init () {
@@ -52,8 +56,32 @@ export default Ember.Component.extend({
     this.set('selectedPattern', this.get('pattern').notes[this.get('channels')[0].note])
   },
 
-  didRender () {
-    // this.get('keyRing').listen(this)
+  isDifferent ({newAttrs, oldAttrs}, attr) {
+    return oldAttrs && newAttrs[attr].value !== oldAttrs[attr].value
+  },
+
+  didReceiveAttrs ({newAttrs, oldAttrs}) {
+    if (this.isDifferent(...arguments, 'playing')) {
+      if (this.get('playing')) {
+        this.set('player', this.runAnimationLoop())
+      }
+      if (!this.get('playing')) {
+        this.get('player').then(() => { currentInterval = 1 })
+      }
+    }
+    if (oldAttrs && newAttrs.restart.value) {
+      currentInterval = 1
+    }
+    if (this.isDifferent(...arguments, 'midiEvent')) {
+      this.handleMidiEvent()
+    }
+  },
+
+  handleMidiEvent () {
+    const midi = this.get('midiEvent')
+    const channel = this.get('channels').findBy('note', midi.noteLetter)
+    if (!channel || midi.type === 128 || midi.channel !== this.get('midiChannel')) return
+    this.triggerChannel(channel.number)
   },
 
   runAnimationLoop () {
@@ -70,7 +98,7 @@ export default Ember.Component.extend({
           loop(resolve, reject)
         })
       } else {
-        // this.set('playingDivision', 0)
+            // this.set('playingDivision', 0)
         resolve('stopped')
       }
 
@@ -159,14 +187,6 @@ export default Ember.Component.extend({
       this.set('selectedPattern', pattern.notes[channel.note])
     },
 
-    changeTempo (tempo) {
-      this.set('project.tempo', parseInt(tempo, 10))
-    },
-
-    changeDivisions (divisions) {
-      this.set('project.divisions', parseInt(divisions, 10))
-    },
-
     triggerSource (channelNumber) {
       this.triggerChannel(channelNumber)
     },
@@ -193,38 +213,13 @@ export default Ember.Component.extend({
         })
     },
 
-    togglePlay () {
-      // currentInterval = 1
-      this.set('playing', !this.get('playing'))
-      if (this.get('playing')) {
-        this.set('player', this.runAnimationLoop())
-      }
+    onChangeMidiDevice ({target}) {
+      this.set('midiDevice', target.value)
     },
 
-    onSpacebar (type, modifiers) {
-      if (type === 'keypress') {
-        this.actions.togglePlay.call(this)
-        return null
-      }
-    },
-
-    wheelIt (division) {
-      currentInterval = 1
-      this.set('playing', false)
-      this.get('player').then(() => {
-        this.actions.togglePlay.call(this)
-      })
+    onChangeMidiChannel ({target}) {
+      this.set('midiChannel', parseInt(target.value, 10))
     }
-  },
-
-  setSoloChannel (value) {
-    const channel = this.get('channels').findBy('number', value)
-    Ember.set(channel, 'solo', !channel.solo)
-  },
-
-  setMutedChannel (value) {
-    const channel = this.get('channels').findBy('number', value)
-    Ember.set(channel, 'mute', !channel.mute)
   },
 
   triggerChannel (channelNumber) {
@@ -238,6 +233,8 @@ export default Ember.Component.extend({
         Ember.set(channel, 'triggered', false)
       })
   },
+
+  //
   loadDefaultSoundBank () {
     const channels = this.get('channels')
     const defaultBank = 'sounds/drums/808-1'

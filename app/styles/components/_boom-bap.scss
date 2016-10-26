@@ -2,10 +2,10 @@
 // @Date:   2016-10-08T16:08:04-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-23T16:15:07-07:00
+// @Last modified time: 2016-10-25T22:27:23-07:00
 // @License: MIT
 
-.main-chassis {
+.boom-bap {
   width: 100%;
   min-height: 500px;
   min-width: 850px;
@@ -37,5 +37,23 @@
     height: auto;
     min-height: 50px;
     background: #DDD;
+  }
+
+  select.midi-device,
+  select.midi-channel {
+    width: 80%;
+    background: teal;
+    color: white;
+    font-family: "Codystar Regular";
+    font-size: 10px;
+    border: solid 1px #ccc;
+  }
+
+  label.midi-channel {
+    font-size: 10px;
+    color: white;
+  }
+  select.midi-channel {
+    width: 35px;
   }
 }

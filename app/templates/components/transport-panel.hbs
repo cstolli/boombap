@@ -3,43 +3,47 @@
 @Date:   2016-10-08T20:01:19-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-23T16:13:29-07:00
+@Last modified time: 2016-10-26T00:16:13-07:00
 @License: MIT
 -->
 
 <div class='tempo'>
-  <label><input type='number' onInput={{action 'changeTempo'}} value={{tempo}}> BPM</label>
+  <label>Location:{{location}}</label>
+  <label><input type='number' onInput={{action 'changeTempo'}} value={{tempo}}>BPM</label>
   <div class=divider></div>
   <label>{{timeSignature.num}}/{{timeSignature.denom}}</label>
   <div class=divider></div>
   <label>
     <select onChange={{action 'changeDivisions'}}>
-    
       {{#each beatDivisions as |option|}}
         <option value={{option}} selected={{eq divisions option}}>{{option}}</option>
       {{/each}}
-      <!-- <option value=3 selected={{eq divisions 3}}>6</option>
-      <option value=4 selected={{eq divisions 4}}>4</option>
-      <option value=8 selected={{eq divisions 8}}>8</option> -->
     </select>
   </label>
 </div>
-{{#transport-button icon=back onClick=(action 'wheelIt')}}
-  <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
-    <polygon points="6,0 14,0 14,40 6,40"></polygon>
-    <polygon points="36,0 14,20 36,40"></polygon>
-  </svg>
-{{/transport-button}}
-{{#transport-button icon=play onClick=(action 'togglePlay')}}
-  {{#unless playing}}
+<div class='buttons'>
+  {{#transport-button icon=back onClick=(action 'wheelIt')}}
     <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
-      <polygon points="10,0 34,20 10,40"></polygon>
+      <polygon points="6,0 14,0 14,40 6,40"></polygon>
+      <polygon points="36,0 14,20 36,40"></polygon>
     </svg>
-  {{else}}
-    <svg viewBox="0 0 40 40" width=40 height=40 class='icon pause' style='transform:scale(.6); transform-origin:center center;'>
-      <polygon points="8,0 16,0 16,40 8,40"></polygon>
-      <polygon points="24,0 32,0 32,40 24,40"></polygon>
+  {{/transport-button}}
+  {{#transport-button icon=back onClick=(action 'stopPlay')}}
+    <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
+      <polygon points="0,0 40,0 40,40 0,40"></polygon>
     </svg>
-  {{/unless}}
-{{/transport-button}}
+  {{/transport-button}}
+  {{#transport-button icon=play onClick=(action 'togglePlay')}}
+    {{#unless playing}}
+      <svg viewBox="0 0 40 40" width=40 height=40 class='icon play' style='transform:scale(.6); transform-origin:center center;'>
+        <polygon points="10,0 34,20 10,40"></polygon>
+      </svg>
+    {{else}}
+      <svg viewBox="0 0 40 40" width=40 height=40 class='icon pause' style='transform:scale(.6); transform-origin:center center;'>
+        <polygon points="8,0 16,0 16,40 8,40"></polygon>
+        <polygon points="24,0 32,0 32,40 24,40"></polygon>
+      </svg>
+    {{/unless}}
+  {{/transport-button}}
+</div>
 {{yield}}

@@ -1,6 +1,15 @@
+<!--
+@Author: Chris Stoll <chrisstoll>
+@Date:   2016-10-11T01:25:01-07:00
+@Email:  chrispstoll@gmail.com
+@Last modified by:   chrisstoll
+@Last modified time: 2016-10-25T23:31:50-07:00
+@License: MIT
+-->
+
 <input
   type="file"
-  accept="audio/*"
+  accept={{accept}}
   style="display:none"
   onchange={{action 'onFileSelection'}}
 >
@@ -10,6 +19,5 @@
     <circle cx=2.5 cy=8 r=1.5></circle>
     <circle cx=2.5 cy=13 r=1.5></circle>
   </svg>
-  <label>{{label}}</label>
+  {{yield}}
 </div>
-{{yield}}

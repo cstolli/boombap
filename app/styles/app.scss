@@ -2,7 +2,7 @@
 // @Date:   2016-10-08T16:02:38-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-23T15:16:43-07:00
+// @Last modified time: 2016-10-25T23:53:11-07:00
 // @License: MIT
 
 $body-font: 'Megrim';
@@ -10,7 +10,9 @@ $transport-font: 'Megrim';
 $transport-font-size: 16px;
 
 @import 'fonts';
+@import 'icons';
 @import 'components/boom-bap';
+@import 'components/main-chassis';
 @import 'components/beat-sequencer';
 @import 'components/beat-sequencer-slot';
 @import 'components/channel-strip';

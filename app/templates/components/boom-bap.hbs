@@ -3,14 +3,11 @@
 @Date:   2016-10-11T01:25:01-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-23T16:13:24-07:00
+@Last modified time: 2016-10-25T23:35:16-07:00
 @License: MIT
 -->
 
-<div class='mixer-slot'>
-</div>
 <div class='channel-slot'>
-
   {{#each channels as |channel index|}}
     {{channel-strip
       keyEvent=keyEvent
@@ -46,17 +43,23 @@
     onVolumeChange=(action 'channelVolume')
     onEqChange=(action 'eqChange')
   }}
-    <div class='transport-panel-slot'>
-      {{transport-panel
-        playing=playing
-        tempo=project.tempo
-        divisions=project.divisions
-        timeSignature=project.timeSignature
-        togglePlay=(action 'togglePlay')
-        changeTempo=(action 'changeTempo')
-        changeDivisions=(action 'changeDivisions')
-        wheelIt=(action 'wheelIt')
-      }}
+    <div class='midi'>
+      <label> MIDI </label>
+      <select class='midi-device' onChange={{action 'onChangeMidiDevice'}}>
+        {{log midiInputs}}
+        {{#each-in midiInputs as |key midiInput|}}
+          <option value={{midiInput.id}}>
+            {{midiInput.manufacturer}} {{midiInput.name}}
+          </option>
+        {{/each-in}}
+      </select>
+      <label class='midi-channel'>Channel:
+        <select class='midi-channel' onChange={{action 'onChangeMidiChannel'}}>
+          {{#each midiChannels as |channel|}}
+            <option value={{channel}} selected={{eq channel midiChannel}}>{{channel}}</option>
+          {{/each}}
+        </select>
+      </label>
     </div>
   {{/master-channel-strip}}
 </div>
@@ -71,5 +74,4 @@
     onChange=(action 'setPattern')
   }}
 </div>
-
 {{yield}}

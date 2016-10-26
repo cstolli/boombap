@@ -10,7 +10,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-23T15:31:28-07:00
+* @Last modified time: 2016-10-25T19:44:00-07:00
 * @License: MIT
 */
 
@@ -27,6 +27,7 @@ import Equalizer from './equalizer'
 import Filter from './filter'
 import Mixer from './mixer'
 import Sampler from './sampler'
+import MIDI from './midi'
 import utils from './utils'
 
 function time () {
@@ -55,6 +56,7 @@ initSampler()
 
 const soundly = {
   context,
+  MIDI,
   Channel,
   Equalizer,
   Filter,

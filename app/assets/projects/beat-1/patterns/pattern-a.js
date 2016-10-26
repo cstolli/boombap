@@ -3,7 +3,7 @@
 * @Date:   2016-10-16T21:57:34-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-23T23:45:28-07:00
+* @Last modified time: 2016-10-25T21:00:51-07:00
 * @License: MIT
 */
 
@@ -24,14 +24,14 @@ export default {
     },
 
     // clap
-    E3: {
+    'D#3': {
       '1:2:1': {length: 1, quantize: 100, velocity: 100},
       '1:4:1': {length: 1, quantize: 100, velocity: 100},
       '2:2:1': {length: 1, quantize: 100, velocity: 100},
       '2:4:1': {length: 1, quantize: 100, velocity: 100}
     },
     // hihat
-    G3: {
+    'G#2': {
       '1:1:1': {length: 1, quantize: 100, velocity: 100},
       '1:1:2': {length: 1, quantize: 100, velocity: 100},
       '1:1:3': {length: 1, quantize: 100, velocity: 100},
