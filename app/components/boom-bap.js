@@ -3,7 +3,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-28T23:17:55-07:00
+* @Last modified time: 2016-10-29T01:00:06-07:00
 * @License: MIT
 */
 
@@ -209,6 +209,7 @@ export default Ember.Component.extend({
       this.get('soundly').Sampler.loadFileSource(file, channelNumber)
         .then((sound) => {
           Ember.set(channel, 'input', sound)
+          Ember.set(channel, 'sample', channel.input.sample)
           Ember.set(channel, 'sourceLabel', file.name)
         })
     },

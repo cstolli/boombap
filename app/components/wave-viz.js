@@ -3,7 +3,7 @@
 * @Date:   2016-10-28T22:59:23-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-28T23:58:33-07:00
+* @Last modified time: 2016-10-29T01:05:57-07:00
 * @License: MIT
 */
 
@@ -24,8 +24,11 @@ export default Ember.Component.extend({
     const sample = this.get('sample')
     if (!sample) return
     this.$('svg').empty()
-    // this.get('soundly').Visualizer.draw(this.$('svg')[0], sample, '#000000')
-    this.get('soundly').Visualizer.draw(this.$('canvas')[0], sample, '#FFFFCC')
+    if (this.get('canvasOrSvg') === 'canvas') {
+      this.get('soundly').Visualizer.draw(this.$('canvas')[0], sample, '#FFDD88')
+    } else {
+      this.get('soundly').Visualizer.draw(this.$('svg')[0], sample, '#FFFF88')
+    }
   },
   willDestroy () {
     $(window).off('resize', this.resizeHandler)

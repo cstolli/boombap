@@ -3,14 +3,14 @@
 @Date:   2016-10-11T01:25:01-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-28T23:20:43-07:00
+@Last modified time: 2016-10-29T01:35:59-07:00
 @License: MIT
 -->
 
-{{channel.label}}
-{{wave-viz sample=channel.sample}}
-{{#source-picker accept="audio/*" label=sourceLabel output=channel onSelectSource=(action 'onSelectSource')}}
 
+{{#source-picker accept="audio/*" label=sourceLabel output=channel onSelectSource=(action 'onSelectSource')}}
+  <h2 class='channel-label'>{{channel.label}}</h2>
+  {{wave-viz sample=channel.sample}}
 {{/source-picker}}
 {{eq-panel bands=channel.eq onEqChange=(action 'onEqChange')}}
 {{pan-knob value=pan onPanChange=(action 'onPanChange')}}

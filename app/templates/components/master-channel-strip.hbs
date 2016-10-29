@@ -3,7 +3,7 @@
 @Date:   2016-10-11T01:25:01-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-16T21:49:54-07:00
+@Last modified time: 2016-10-29T02:04:14-07:00
 @License: MIT
 -->
 
@@ -11,7 +11,15 @@
   <h1>BooMbaP</h1>
   <h1 class='label-light' style={{style}}>BooMbaP</h1>
 </div>
+
 {{eq-panel bands=channel.eq onEqChange=(action 'onEqChange')}}
 {{pan-knob value=pan onPanChange=(action 'onPanChange')}}
 {{volume-fader onChange=(action 'onVolumeChange') volume=volume channelNumber=channelNumber}}
+
+<div class='mute-solo'>
+  <div class='mute' onClick={{action 'onMute'}}>
+    <div class='light'></div>
+    <div class='label'>M</div>
+  </div>
+</div>
 {{yield}}

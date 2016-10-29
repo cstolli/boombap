@@ -2,23 +2,35 @@
 // @Date:   2016-10-08T16:38:27-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-23T00:21:58-07:00
+// @Last modified time: 2016-10-29T01:52:42-07:00
 // @License: MIT
-
-
 
 .channel-strip {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background: #DDD;
   width: calc(100% / 9 - 2px);
+  padding: 8px 0;
 
   h1 {
     margin: 4px 0 0 0;
     font-size: 21px;
+  }
+
+  .channel-label {
+    position: absolute;
+    top: -8px;
+    right: 5px;
+    text-align: right;
+    color: #FFFFFF;
+    -webkit-text-stroke-color: #FFFFFF;
+    -webkit-text-stroke-width: 1px;
+    font-size: 13px;
+    opacity: 0.5;
+    z-index: 1;
   }
 
   .trigger-pad {
@@ -130,16 +142,17 @@
       width: 100%;
       display: flex;
       align-items: center;
-      height: 13%;
+      height: 40px;
 
       h1 {
         position: absolute;
         letter-spacing: -1px;
-        top: 50%;
         width: 100%;
         text-align: center;
         color: #FFAA88;
+        margin: 0;
       }
+
       .label-light {
         opacity: 0;
         color: #FFFFCC;

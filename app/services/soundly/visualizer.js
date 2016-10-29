@@ -9,7 +9,7 @@
 * @Date:   2016-10-28T22:37:58-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-28T23:26:41-07:00
+* @Last modified time: 2016-10-29T01:44:45-07:00
 * @License: MIT
 */
 
@@ -54,7 +54,7 @@ function drawCanvas (canvas, buffer, color) {
   if (color) {
     ctx.fillStyle = color
   }
-
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
   var data = buffer.getChannelData(0)
   var step = Math.ceil(data.length / width)
   var amp = height / 2

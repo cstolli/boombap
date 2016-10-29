@@ -2,18 +2,19 @@
 // @Date:   2016-10-28T23:44:57-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-28T23:51:37-07:00
+// @Last modified time: 2016-10-29T01:31:05-07:00
 // @License: MIT
 
 .wave-viz {
-  width: 90%;
-  padding: 3px;
+  width: 100%;
+  height: 80%;
+  padding: 1px;
   border-radius: 2px;
-  background: linear-gradient(to bottom, #222, #666);
 
   svg, canvas  {
     width: 100%;
-    height: 30px;
+    height: 100%;
+    z-index: 2;
   }
 
   rect {

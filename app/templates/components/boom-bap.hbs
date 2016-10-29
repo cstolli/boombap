@@ -3,7 +3,7 @@
 @Date:   2016-10-11T01:25:01-07:00
 @Email:  chrispstoll@gmail.com
 @Last modified by:   chrisstoll
-@Last modified time: 2016-10-25T23:35:16-07:00
+@Last modified time: 2016-10-29T02:03:01-07:00
 @License: MIT
 -->
 
@@ -44,7 +44,6 @@
     onEqChange=(action 'eqChange')
   }}
     <div class='midi'>
-      <label> MIDI </label>
       <select class='midi-device' onChange={{action 'onChangeMidiDevice'}}>
         {{log midiInputs}}
         {{#each-in midiInputs as |key midiInput|}}
@@ -53,7 +52,8 @@
           </option>
         {{/each-in}}
       </select>
-      <label class='midi-channel'>Channel:
+
+      <label class='midi-channel'>Channel
         <select class='midi-channel' onChange={{action 'onChangeMidiChannel'}}>
           {{#each midiChannels as |channel|}}
             <option value={{channel}} selected={{eq channel midiChannel}}>{{channel}}</option>
