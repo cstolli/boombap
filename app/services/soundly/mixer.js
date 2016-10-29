@@ -9,7 +9,7 @@
 * @Date:   2016-10-16T18:25:20-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-23T21:15:38-07:00
+* @Last modified time: 2016-10-28T22:55:06-07:00
 * @License: MIT
 */
 
@@ -32,12 +32,6 @@ function getChannels () {
 
 function getMasterChannel (mixer) {
   return mixer.channels['master']
-}
-
-function setSample (sample, meta, channelNumber) {
-  getChannel(channelNumber).sample = sample
-  getChannel(channelNumber).sampleMeta = meta
-  return getChannel(channelNumber)
 }
 
 function setChannelPan (channelNumber, value) {
@@ -122,8 +116,7 @@ const mixer = {
   toggleChannelSolo,
   setChannelEq,
   setChannelVolume,
-  setChannelPan,
-  setSample
+  setChannelPan
 }
 
 export default mixer

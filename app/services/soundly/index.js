@@ -10,7 +10,7 @@
 * @Date:   2016-10-11T01:25:01-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-25T19:44:00-07:00
+* @Last modified time: 2016-10-28T23:01:16-07:00
 * @License: MIT
 */
 
@@ -29,6 +29,7 @@ import Mixer from './mixer'
 import Sampler from './sampler'
 import MIDI from './midi'
 import utils from './utils'
+import Visualizer from './visualizer'
 
 function time () {
   return context.currentTime
@@ -62,6 +63,7 @@ const soundly = {
   Filter,
   Mixer,
   Sampler,
+  Visualizer,
   time,
   utils
 }

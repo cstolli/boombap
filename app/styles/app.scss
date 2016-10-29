@@ -2,7 +2,7 @@
 // @Date:   2016-10-08T16:02:38-07:00
 // @Email:  chrispstoll@gmail.com
 // @Last modified by:   chrisstoll
-// @Last modified time: 2016-10-25T23:53:11-07:00
+// @Last modified time: 2016-10-28T23:45:05-07:00
 // @License: MIT
 
 $body-font: 'Megrim';
@@ -23,6 +23,7 @@ $transport-font-size: 16px;
 @import 'components/transport-button';
 @import 'components/transport-panel';
 @import 'components/source-picker';
+@import 'components/wave-viz';
 
 html {
   font-family: $body-font;

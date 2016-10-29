@@ -1,0 +1,15 @@
+<!--
+@Author: Chris Stoll <chrisstoll>
+@Date:   2016-10-28T22:59:23-07:00
+@Email:  chrispstoll@gmail.com
+@Last modified by:   chrisstoll
+@Last modified time: 2016-10-28T23:59:06-07:00
+@License: MIT
+-->
+{{log canvasOrSvg}}
+{{#if (eq canvasOrSvg 'svg')}}
+  <svg></svg>
+{{ else }}
+  <canvas></canvas>
+{{/if}}
+{{yield}}

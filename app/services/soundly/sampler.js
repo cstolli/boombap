@@ -10,7 +10,7 @@
 * @Date:   2016-10-16T19:47:20-07:00
 * @Email:  chrispstoll@gmail.com
 * @Last modified by:   chrisstoll
-* @Last modified time: 2016-10-16T20:33:04-07:00
+* @Last modified time: 2016-10-28T23:13:26-07:00
 * @License: MIT
 */
 
@@ -20,6 +20,12 @@ import patterns from 'npm:validator'
 
 import {SAMPLER} from './strings'
 import utils from './utils'
+
+function setSample (sample, meta, channelNumber) {
+  sampler.mixer.getChannel(channelNumber).sample = sample
+  sampler.mixer.getChannel(channelNumber).sampleMeta = meta
+  return sampler.mixer.getChannel(channelNumber)
+}
 
 function createSample (source, channel) {
   if (patterns.isURL(source)) {
@@ -36,7 +42,7 @@ function loadFileSource (file, channel) {
   const result = new Promise((resolve, reject) => {
     reader.onload = function () {
       sampler.context.decodeAudioData(reader.result, (buffer) => {
-        resolve(sampler.mixer.setSample(buffer, file, channel))
+        resolve(setSample(buffer, file, channel))
       })
     }
   })
@@ -53,7 +59,7 @@ function loadUrlSource (url, channel) {
   const result = new Promise((resolve, reject) => {
     oReq.onload = (response) => {
       sampler.context.decodeAudioData(response.target.response, (buffer) => {
-        resolve(sampler.mixer.setSample(buffer, meta, channel))
+        resolve(setSample(buffer, meta, channel))
       })
     }
     oReq.onerror = (err) => {

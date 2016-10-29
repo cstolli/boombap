@@ -1,0 +1,23 @@
+// @Author: Chris Stoll <chrisstoll>
+// @Date:   2016-10-28T23:44:57-07:00
+// @Email:  chrispstoll@gmail.com
+// @Last modified by:   chrisstoll
+// @Last modified time: 2016-10-28T23:51:37-07:00
+// @License: MIT
+
+.wave-viz {
+  width: 90%;
+  padding: 3px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, #222, #666);
+
+  svg, canvas  {
+    width: 100%;
+    height: 30px;
+  }
+
+  rect {
+    fill: #ffffcc;
+    opacity: 0.5;
+  }
+}
